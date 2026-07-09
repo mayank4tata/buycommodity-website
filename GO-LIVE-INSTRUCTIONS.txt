@@ -1,0 +1,27 @@
+BUY COMMODITY - EXACT GO LIVE STEPS
+
+A) GITHUB
+1. Open github.com and login.
+2. Create a new repository, e.g. buycommodity-website.
+3. Upload the CONTENTS of this folder, not the ZIP itself.
+   Upload these items: index.html, products.html, enquiry.html, admin.html, css, js, assets.
+4. Click Commit changes.
+5. Go to Settings > Pages.
+6. Source: Deploy from a branch.
+7. Branch: main. Folder: /root.
+8. Save.
+9. Wait 2-5 minutes. GitHub will show your live URL.
+
+B) SUPABASE
+No new password/code is needed in website.
+Use the same Supabase admin email/password you created in Authentication > Users.
+
+C) FIRST TEST AFTER GITHUB LIVE
+1. Open https://YOUR-GITHUB-PAGES-URL/admin.html
+2. Login with Supabase admin email/password.
+3. Click Save Changes once.
+4. Open enquiry.html and submit one test enquiry.
+5. Go back to admin.html and click Refresh Enquiries.
+
+D) CUSTOM DOMAIN
+After GitHub Pages works, connect your domain in GitHub Pages and DNS.
