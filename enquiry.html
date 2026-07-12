@@ -1,5 +1,89 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Product Enquiry | Buy Commodity</title><link rel="stylesheet" href="css/style.css"></head><body>
-<header class="topbar"><div class="container nav"><a class="brand" href="index.html"><img src="assets/header-logo-icon-v3.png" alt="Buy Commodity"><div><b>BUY COMMODITY</b><span>Building Trust. Delivering Strength.</span></div></a><nav class="menu"><a href="index.html">HOME</a><a href="index.html#about">ABOUT US</a><a class="active" href="enquiry.html">PRICES &amp; ENQUIRY</a><a href="products.html">PRODUCTS</a><a href="index.html#contact">CONTACT US</a></nav><a class="call" data-call>☎ <span data-phone></span></a></div></header>
-<div class="crumb"><div class="container">⌂ Home › Enquiry</div></div>
-<main class="section"><div class="container enquiry-layout enquiry-full"><div><div class="toolbar no-margin"><div><h2 class="products-enquiry-title">Product Enquiry</h2><p class="sub">Select a product category to view rates and submit your enquiry.</p></div></div><div class="rate-grid" id="enquiryProducts"></div></div><aside class="formbox enquiry-popup"><button type="button" id="closeEnqForm" class="form-close" aria-label="Close enquiry form">×</button><h2>Send Your Enquiry</h2><form id="enqForm" class="formgrid"><label>Your Name *<input required name="name" placeholder="Enter your full name"></label><label>Company Name *<input required name="company" placeholder="Enter company name"></label><label>GST No.<input name="gst" placeholder="Optional"></label><label>City<input name="city" placeholder="Delivery city"></label><label>Mobile Number *<input required name="mobile" placeholder="Enter mobile number"></label><label>Email ID *<input required type="email" name="email" placeholder="Enter email id"></label><label class="full">Product Interested In *<select required name="product" id="productSelect"></select></label><label class="full">Requirement / Specifications<textarea name="requirement" placeholder="Enter material type, HR/CR, grade, size, quantity, delivery location, rate expectation etc."></textarea></label><label class="full consent"><input type="checkbox" required> I agree to be contacted by Buy Commodity team.</label><button class="btn btn-gold full">Send Enquiry →</button></form><p class="notice">Your information is safe with us. This enquiry is submitted directly to Buy Commodity.</p></aside></div></main>
-<section class="container contact-strip"><div><b>Need Help?</b><br>Our team is ready.</div><div>☎ <span data-phone></span></div><div>✉ <span data-email></span></div><div>🌐 <span data-website></span></div><div><span data-working-hours></span></div></section><br><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase-config.js"></script><script src="js/app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Product Enquiry | Buy Commodity</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="container nav">
+            <a class="brand" href="index.html">
+                <img src="assets/header-logo-icon-v3.png" alt="Buy Commodity">
+                <div><b>BUY COMMODITY</b><span>Building Trust. Delivering Strength.</span></div>
+            </a>
+            <nav class="menu">
+                <a href="index.html">HOME</a>
+                <a href="index.html#about">ABOUT US</a>
+                <a class="active" href="enquiry.html">PRICES &amp; ENQUIRY</a>
+                <a href="products.html">PRODUCTS</a>
+                <a href="index.html#contact">CONTACT US</a>
+            </nav>
+            <a class="call" data-call>☎ <span data-phone></span></a>
+        </div>
+    </header>
+
+    <div class="crumb"><div class="container">⌂ Home › Enquiry</div></div>
+
+    <main class="section">
+        <div class="container enquiry-layout enquiry-full">
+            <div>
+                <div class="toolbar no-margin">
+                    <div>
+                        <h2 class="products-enquiry-title">Product Enquiry</h2>
+                        <p class="sub">View available products, select what you need and submit your enquiry.</p>
+                    </div>
+                </div>
+                <section class="enquiry-catalogue-filters" aria-label="Filter products and pricing">
+                    <label class="enquiry-filter-search">Search
+                        <input id="enquiryCatalogueSearch" type="search" placeholder="Product, grade, specification or size">
+                    </label>
+                    <label>Segment<select id="enquirySegmentFilter"><option value="">All Segments</option></select></label>
+                    <label>Product<select id="enquiryProductFilter"><option value="">All Products</option></select></label>
+                    <label>Grade<select id="enquiryGradeFilter"><option value="">All Grades</option></select></label>
+                    <button class="btn btn-outline" id="resetEnquiryCatalogueFilters" type="button">Reset Filters</button>
+                    <div class="enquiry-filter-summary">
+                        <strong id="enquiryCatalogueResultCount" aria-live="polite"></strong>
+                        <label>Products per page<select id="enquiryProductsPerPage"><option value="9">9</option><option value="18">18</option><option value="27">27</option></select></label>
+                    </div>
+                </section>
+                <div class="rate-grid" id="enquiryProducts"></div>
+                <nav class="enquiry-pagination" id="enquiryPagination" aria-label="Product pages" hidden></nav>
+            </div>
+            <aside class="formbox enquiry-popup">
+                <button type="button" id="closeEnqForm" class="form-close" aria-label="Close enquiry form">×</button>
+                <h2>Send Your Enquiry</h2>
+                <form id="enqForm" class="formgrid" novalidate>
+                    <label>Your Name *<input required name="customer_name" autocomplete="name" placeholder="Enter your full name"></label>
+                    <label>Company Name<input name="company_name" autocomplete="organization" placeholder="Enter company name"></label>
+                    <label>City<input name="city" placeholder="Delivery city"></label>
+                    <label>Mobile Number *<input required name="mobile" inputmode="tel" autocomplete="tel" placeholder="Enter mobile number"></label>
+                    <label class="full">Email ID<input type="email" name="email" autocomplete="email" placeholder="Enter email id"></label>
+                    <div class="full enquiry-pricing-options-field"><b>Products Interested In *</b><small id="productSelectHelp">Select one or more products. Quantity and unit are enabled for selected products.</small></div>
+                    <div class="full selected-enquiry-products" id="selectedEnquiryProducts" aria-describedby="productSelectHelp"></div>
+                    <label class="full enquiry-need-help">Can’t find the product you need?<small>Please describe your product requirement below, including the grade, specification, size, quantity, or any other relevant details.</small><textarea name="requirement_details" placeholder="Describe the product you require"></textarea></label>
+                    <label class="full">Additional Message<textarea name="message" placeholder="Any additional message for our team"></textarea></label>
+                    <label class="enquiry-honeypot" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+                    <input type="hidden" name="source_page" id="enquirySourcePage" value="Direct Enquiry Page">
+                    <div class="full enquiry-submit-status" id="enquirySubmitStatus"></div>
+                    <label class="full consent"><input type="checkbox" required> I confirm that the above enquiry details are correct.</label>
+                    <button class="btn btn-gold wide" id="submitEnquiryBtn" type="submit">Send Enquiry &rarr;</button>
+                </form>
+            </aside>
+        </div>
+    </main>
+
+    <section class="container contact-strip">
+        <div><b>Need Help?</b><br>Our team is ready.</div>
+        <div>☎ <span data-phone></span></div>
+        <div>✉ <span data-email></span></div>
+        <div>🌐 <span data-website></span></div>
+        <div><span data-working-hours></span></div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

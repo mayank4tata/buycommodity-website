@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+      <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0e1113"/><stop offset="1" stop-color="#2e2208"/></linearGradient><linearGradient id="steel" x1="0" x2="1"><stop stop-color="#8f989f"/><stop offset=".25" stop-color="#f3f5f6"/><stop offset=".55" stop-color="#596168"/><stop offset="1" stop-color="#d7dcdf"/></linearGradient></defs>
+      <rect width="400" height="260" rx="18" fill="url(#bg)"/><circle cx="350" cy="-20" r="140" fill="#d89a05" opacity=".18"/>
+      <g transform="translate(58 72)">
+          <path d="M25 98 L255 38 L302 75 L72 140 Z" fill="url(#steel)" stroke="#959ba1" stroke-width="3"/>
+          <path d="M72 140 L302 75 V107 L72 170 Z" fill="#737b82"/><path d="M25 98 L72 140 V170 L25 128 Z" fill="#aab0b4"/>
+          <path d="M47 78 L277 49" stroke="#fff" stroke-opacity=".38" stroke-width="5"/>
+        </g>
+      <rect x="0" y="205" width="400" height="55" fill="#d89a05" opacity=".95"/><text x="200" y="239" font-family="Arial, sans-serif" font-weight="700" font-size="24" text-anchor="middle" fill="#111">SS Sheet</text>
+    </svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260">
+      <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#0e1113"/><stop offset="1" stop-color="#2e2208"/></linearGradient><linearGradient id="steel" x1="0" x2="1"><stop stop-color="#8f989f"/><stop offset=".25" stop-color="#f3f5f6"/><stop offset=".55" stop-color="#596168"/><stop offset="1" stop-color="#d7dcdf"/></linearGradient></defs>
+      <rect width="400" height="260" rx="18" fill="url(#bg)"/><circle cx="350" cy="-20" r="140" fill="#d89a05" opacity=".18"/>
+      <g transform="translate(80 56)" fill="url(#steel)" stroke="#8a9095" stroke-width="3">
+          <path d="M30 20 H250 V54 H67 V205 H30 Z"/><path d="M75 64 H270 V98 H112 V220 H75 Z" opacity=".82"/>
+          <path d="M120 108 H290 V140 H156 V230 H120 Z" opacity=".68"/>
+        </g>
+      <rect x="0" y="205" width="400" height="55" fill="#d89a05" opacity=".95"/><text x="200" y="239" font-family="Arial, sans-serif" font-weight="700" font-size="24" text-anchor="middle" fill="#111">Angles</text>
+    </svg>

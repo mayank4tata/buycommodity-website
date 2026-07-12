@@ -1,11 +1,192 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin | Buy Commodity</title><link rel="stylesheet" href="css/style.css"></head><body><div class="admin-wrap">
-<div class="login" id="loginBox"><a class="brand" href="index.html"><img src="assets/header-logo-icon-v3.png" alt="Buy Commodity"><div><b>BUY COMMODITY</b><span>Admin Panel</span></div></a><h2>Admin Login</h2><input id="uid" placeholder="Admin Email" type="email"><input id="pwd" type="password" placeholder="Password"><button class="btn btn-gold wide" id="loginBtn">Login</button></div>
-<div class="admin-panel" id="adminPanel" style="display:none"><h1>Admin Dashboard</h1><div class="admin-actions"><button class="btn btn-outline" id="logoutBtn" type="button">Logout</button><span id="adminStatus" class="sub">Checking Supabase...</span></div><p class="notice"><b>Important:</b> Supabase connected mode. Please login with your Supabase admin email and password. Changes will save to database.</p>
-<h2>Contact / Enquiry Settings</h2><div class="setting-grid"><label>Phone 1<input id="set_phone"></label><label>Phone 2<input id="set_phone2"></label><label>WhatsApp<input id="set_whatsapp"></label><label>Enquiry Email<input id="set_email"></label><label>Website<input id="set_website"></label><label>Working Hours<input id="set_workingHours" placeholder="Mon - Sat: 9:30 AM - 6:30 PM | Sunday: Closed"></label><label style="grid-column:span 2">General Address<input id="set_address"></label><label style="grid-column:span 2">Corporate Office Address<input id="set_corporateAddress"></label><label style="grid-column:span 2">GST Address<input id="set_gstAddress"></label></div>
-<h2>Available Product Pictures</h2><p class="sub">Choose these clean product pictures for enquiry cards. These are cleaner product photographs for enquiry cards and can be selected by admin.</p><div class="image-options" id="imageOptions"></div>
-<h2>Enquiry Product Cards</h2><p class="sub">Admin controls product cards and rate rows. Use one Excel sheet: repeat Product ID for multiple rates under one product card.</p>
-<div class="admin-actions"><button class="btn btn-gold" id="saveAll">Save Changes</button><button class="btn btn-outline" id="addRow">Add Rate Row</button><button class="btn btn-outline" id="exportCsv">Download Excel</button><button class="btn btn-outline" id="exportJson">Download Backup JSON</button><label class="btn btn-outline">Upload Excel/CSV/JSON<input type="file" id="importFile" accept=".xlsx,.xls,.csv,.json" hidden></label><button class="btn btn-outline" id="resetData">Reset Defaults</button><a class="btn btn-outline" href="index.html">View Website</a></div>
-<div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>#</th><th>Product ID</th><th>Category</th><th>Display Name</th><th>Type</th><th>Grade</th><th>Specification</th><th>Size / Thickness</th><th>Rate</th><th>Unit</th><th>Valid Up To</th><th>Remarks</th><th>Picture</th><th>Action</th></tr></thead><tbody id="adminRows"></tbody></table></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin | Buy Commodity</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="admin-wrap">
+        <div class="admin-auth-check" id="adminAuthCheck" role="status" aria-live="polite">
+            Checking administrator session...
+        </div>
 
-<h2>Website Enquiries</h2><p class="sub">Enquiries submitted from the public website will appear here.</p><div class="admin-actions"><button class="btn btn-outline" id="refreshEnquiries" type="button">Refresh Enquiries</button></div><div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Date</th><th>Name</th><th>Company</th><th>Mobile</th><th>Email</th><th>Product</th><th>Requirement</th></tr></thead><tbody id="enquiryRows"><tr><td colspan="7">Login to view enquiries.</td></tr></tbody></table></div>
-</div></div><script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase-config.js"></script><script src="js/app.js"></script></body></html>
+        <div class="login" id="loginBox" hidden>
+            <a class="brand" href="index.html">
+                <img src="assets/header-logo-icon-v3.png" alt="Buy Commodity">
+                <div><b>BUY COMMODITY</b><span>Admin Panel</span></div>
+            </a>
+            <h2>Admin Login</h2>
+            <input id="uid" type="email" placeholder="Admin Email">
+            <input id="pwd" type="password" placeholder="Password">
+            <button class="btn btn-gold wide" id="loginBtn">Login</button>
+        </div>
+
+        <div class="admin-panel" id="adminPanel" hidden>
+            <div class="admin-head">
+                <h1>Admin Dashboard</h1>
+                <p class="notice"><b>Important:</b> Changes are saved directly to the catalogue database. Export product masters and pricing before bulk updates.</p>
+            </div>
+
+            <div class="admin-module-nav" id="adminModuleNav">
+                <div class="admin-sidebar-brand">
+                    <img src="assets/header-logo-icon-v3.png" alt="BCSPL">
+                    <strong>BCSPL Admin</strong>
+                </div>
+                <div class="admin-nav-group-label">Overview</div>
+                <button class="btn btn-outline active" type="button" data-section="dashboardSection"><span class="nav-glyph">⌂</span><span>Dashboard</span></button>
+                <div class="admin-nav-group-label">Master Data</div>
+                <button class="btn btn-outline" type="button" data-section="segmentsSection"><span class="nav-glyph">◫</span><span>Product Segments</span></button>
+                <button class="btn btn-outline" type="button" data-section="categoriesSection"><span class="nav-glyph">▱</span><span>Categories</span></button>
+                <button class="btn btn-outline" type="button" data-section="productsSection"><span class="nav-glyph">□</span><span>Products</span></button>
+                <button class="btn btn-outline" type="button" data-section="gradeMasterSection"><span class="nav-glyph">≋</span><span>Grade Master</span></button>
+                <button class="btn btn-outline" type="button" data-section="pricingSection"><span class="nav-glyph">◇</span><span>Product Pricing</span></button>
+                <button class="btn btn-outline" type="button" data-section="imageLibrarySection"><span class="nav-glyph">▧</span><span>Image Library</span></button>
+                <div class="admin-nav-group-label">Operations</div>
+                <button class="btn btn-outline" type="button" data-section="enquiriesSection"><span class="nav-glyph">✉</span><span>Enquiries</span></button>
+                <button class="btn btn-outline" type="button" data-section="enquiryRecipientsSection"><span class="nav-glyph">@</span><span>Enquiry Recipients</span></button>
+                <button class="btn btn-outline" type="button" data-section="siteSettingsSection"><span class="nav-glyph">⚙</span><span>Site Settings</span></button>
+                <button class="btn btn-outline" type="button" data-section="importExportSection"><span class="nav-glyph">⇅</span><span>Import / Export</span></button>
+            <button class="admin-sidebar-logout" id="sidebarLogoutBtn" type="button"><span>↪</span> Logout</button></div>
+
+            <section class="admin-section" id="dashboardSection" data-admin-section>
+                <h2>Dashboard</h2>
+                <div class="dashboard-grid" id="dashboardCards"></div>
+                <div class="admin-actions">
+                    <button class="btn btn-gold" id="dashboardSegmentsBtn">Manage Segments</button>
+                    <button class="btn btn-outline" id="dashboardProductsBtn">Manage Products</button>
+                    <button class="btn btn-outline" id="dashboardPricingBtn">Manage Pricing</button>
+                    <button class="btn btn-outline" id="dashboardEnquiriesBtn">View Enquiries</button>
+                </div>
+            </section>
+
+            <section class="admin-section" id="segmentsSection" data-admin-section style="display:none">
+                <h2>Product Segments</h2>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addSegmentBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveSegmentsBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedSegmentsBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="segmentsSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearSegmentsSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllSegments" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Segment Name</th><th>Description</th><th>Segment Photograph</th><th>Segment Icon</th><th title="Controls the segment's priority on the Home page">Home Display Priority *</th><th>Active</th></tr></thead><tbody id="segmentRows"></tbody></table></div>
+                <p class="admin-order-note"><span aria-hidden="true">*</span> Controls the order of Product Segments on the Home page. Only the first five active segments by Home Display Priority are shown.</p>
+            </section>
+
+            <section class="admin-section" id="categoriesSection" data-admin-section style="display:none">
+                <h2>Product Categories</h2>
+                <p class="sub">Product Categories are classification only and do not appear as Home tiles.</p>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addCategoryBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveCategoriesBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedCategoriesBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="categoriesSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearCategoriesSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllCategories" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product Segment</th><th>Category Name</th><th>Active</th></tr></thead><tbody id="categoryRows"></tbody></table></div>
+            </section>
+
+            <section class="admin-section" id="productsSection" data-admin-section style="display:none">
+                <h2>Products</h2>
+                <p class="sub">Products power Home tiles and enquiry routing. Maximum public Home tiles shown: 8.</p>
+                <div class="admin-actions admin-toolbar product-primary-actions"><button class="btn btn-gold icon-action" id="addProductBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveProductsBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="bulkDeleteProductsBtnTop" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="productsSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearProductsSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllProducts" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product Segment</th><th>Product Category</th><th>Product Name</th><th>Description</th><th>Product Photograph</th><th title="Master active status">Active</th><th title="Include this product on the Prices &amp; Enquiry page">Show on Prices &amp; Enquiry</th><th title="Required display position when shown on the Prices &amp; Enquiry page">Prices &amp; Enquiry Display Order</th><th title="Show this product as one of the maximum eight shortcut tiles below Home Search">Show below Home Search</th><th title="Required tile position from 1 to 8 when shown below Home Search">Home Tile Position (1-8)</th></tr></thead><tbody id="productRows"></tbody></table></div>
+            </section>
+
+            <section class="admin-section" id="pricingSection" data-admin-section style="display:none">
+                <h2>Product Pricing</h2>
+                <p class="sub">Each active pricing row is shown on the Prices &amp; Enquiry page and inherits the product photograph.</p>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addPricingBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="savePricingBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedPricingBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="pricingSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearPricingSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button><button class="btn btn-outline icon-action" id="bulkChangeRateDisplayBtn" title="Change Rate Display" aria-label="Change Rate Display"><span class="action-icon" aria-hidden="true">$</span></button><button class="btn btn-outline icon-action" id="bulkChangeValidityBtn" title="Change Price Validity" aria-label="Change Price Validity"><span class="action-icon" aria-hidden="true">▣</span></button><button class="btn btn-outline icon-action" id="bulkChangeUnitBtn" title="Change Unit" aria-label="Change Unit"><span class="action-icon" aria-hidden="true">⇅</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllPricing" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product</th><th>Grade</th><th>Specification</th><th>Size / Thickness</th><th>Unit</th><th>Rate</th><th>Rate Display</th><th>Price Validity</th><th>Rate Updated On</th><th>Price Valid Till</th><th>Remarks</th><th>Display Order</th><th>Active</th></tr></thead><tbody id="pricingRows"></tbody></table></div>
+            </section>
+
+            <section class="admin-section" id="gradeMasterSection" data-admin-section style="display:none">
+                <h2>Grade Master</h2>
+                <p class="sub">Manage Product-specific Grade values used by Product Pricing.</p>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addGradeBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveGradesBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedGradesBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="gradesSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearGradesSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllGrades" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product Segment</th><th>Product Category</th><th>Product</th><th>Grade Name</th><th>Grade Selection Order *</th><th>Active</th></tr></thead><tbody id="gradeRows"></tbody></table></div>
+                <p class="admin-order-note"><span aria-hidden="true">*</span> Controls the order in which Grades appear for the selected Product in Product Pricing. Lower numbers appear first.</p>
+            </section>
+
+            <section class="admin-section" id="imageLibrarySection" data-admin-section style="display:none">
+                <h2>Image Library</h2>
+                <p class="sub">Uploads go to the public Supabase Storage bucket <b>bcspl-images</b>. Dropdowns elsewhere show the Image Name only.</p>
+
+                <h3>Product Segment Photographs</h3>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addSegmentPhotoBtn" title="Add Segment Photograph" aria-label="Add Segment Photograph"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveSegmentPhotosBtn" title="Save selected" aria-label="Save selected"><span class="action-icon" aria-hidden="true">💾</span></button><span class="selection-count-badge" id="segmentPhotosSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearSegmentPhotosSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button><button class="btn btn-outline danger-action icon-action" id="bulkDeleteSegmentPhotosBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllSegmentPhotos" title="Select all rows" aria-label="Select all rows"></th><th>Preview</th><th>Image Name</th><th>Source</th><th>File Path</th><th>Active</th><th>Upload / Replace</th></tr></thead><tbody id="segmentPhotoRows"></tbody></table></div>
+
+                <h3>Product Segment Icons</h3>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addSegmentIconBtn" title="Add Segment Icon" aria-label="Add Segment Icon"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveSegmentIconsBtn" title="Save selected" aria-label="Save selected"><span class="action-icon" aria-hidden="true">💾</span></button><span class="selection-count-badge" id="segmentIconsSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearSegmentIconsSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button><button class="btn btn-outline danger-action icon-action" id="bulkDeleteSegmentIconsBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllSegmentIcons" title="Select all rows" aria-label="Select all rows"></th><th>Preview</th><th>Image Name</th><th>Source</th><th>File Path</th><th>Active</th><th>Upload / Replace</th></tr></thead><tbody id="segmentIconRows"></tbody></table></div>
+
+                <h3>Product Photographs</h3>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addProductPhotoBtn" title="Add Product Photograph" aria-label="Add Product Photograph"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveProductPhotosBtn" title="Save selected" aria-label="Save selected"><span class="action-icon" aria-hidden="true">💾</span></button><span class="selection-count-badge" id="productPhotosSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearProductPhotosSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button><button class="btn btn-outline danger-action icon-action" id="bulkDeleteProductPhotosBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllProductPhotos" title="Select all rows" aria-label="Select all rows"></th><th>Preview</th><th>Image Name</th><th>Source</th><th>File Path</th><th>Active</th><th>Upload / Replace</th></tr></thead><tbody id="productPhotoRows"></tbody></table></div>
+            </section>
+
+            <section class="admin-section" id="enquiriesSection" data-admin-section style="display:none">
+                <h2>Enquiries</h2>
+                <p class="sub">View customer enquiries and update status only.</p>
+                <div class="admin-filters enquiry-filters">
+                    <label class="admin-filter-search">Search Enquiries<input id="enquirySearchInput" type="search" placeholder="Reference, name, company, mobile, email or product"></label>
+                    <label>Received From<input id="enquiryDateFrom" type="date"></label>
+                    <label>Received To<input id="enquiryDateTo" type="date"></label>
+                    <label>Status<select id="enquiryStatusFilter"><option value="">All statuses</option><option value="new">New</option><option value="contacted">Contacted</option><option value="closed">Closed</option></select></label>
+                    <label>Email Notification<select id="enquiryEmailFilter"><option value="">All notifications</option><option value="sent">Sent</option><option value="failed">Failed</option><option value="pending">Pending</option></select></label>
+                    <button class="btn btn-outline" id="clearEnquiryFiltersBtn" type="button">Clear Filters</button>
+                </div>
+                <p class="enquiry-result-count" id="enquiryResultCount" aria-live="polite"></p>
+                <div class="admin-table-wrap"><table class="admin-table enquiries-table"><thead><tr><th>#</th><th>Received On</th><th>Name</th><th>Company</th><th>Mobile</th><th>Email</th><th>Selected Lines</th><th>Status</th><th>Action</th></tr></thead><tbody id="enquiryRows"></tbody></table></div>
+                <div class="admin-dialog enquiry-details-dialog" id="enquiryDetailsDialog" role="dialog" aria-modal="true" aria-labelledby="enquiryDetailsTitle" hidden>
+                    <div class="admin-dialog-card enquiry-details-card">
+                        <div class="admin-dialog-head enquiry-details-head"><div><h3 id="enquiryDetailsTitle">Enquiry Details</h3><p id="enquiryDetailsReference"></p></div><button class="enquiry-dialog-close" id="closeEnquiryDetailsX" type="button" aria-label="Close enquiry details">×</button></div>
+                        <div class="enquiry-details-scroll" id="enquiryDetailsContent"></div>
+                        <div class="enquiry-dialog-actions"><button class="btn btn-outline" id="closeEnquiryDetailsBtn" type="button">Close</button></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="admin-section" id="siteSettingsSection" data-admin-section style="display:none">
+                <h2>Site Settings</h2>
+                <div class="setting-grid">
+                    <label>Company Name<input id="set_company_name"></label>
+                    <label>Phone 1<input id="set_mobile_1"></label>
+                    <label>Phone 2<input id="set_mobile_2"></label>
+                    <label>WhatsApp<input id="set_whatsapp"></label>
+                    <label>Email<input id="set_email"></label>
+                    <label>Backup Enquiry Recipient Email<input id="set_enquiry_email"></label>
+                    <label>Website<input id="set_website"></label>
+                    <label>GST Number<input id="set_gst_number"></label>
+                    <label>Working Hours<input id="set_working_hours"></label>
+                    <label style="grid-column:span 2">Corporate Office<input id="set_corporate_office"></label>
+                    <label style="grid-column:span 2">GST Address<input id="set_gst_address"></label>
+                    <label style="grid-column:span 2">Google Maps Link<input id="set_google_maps_link"></label>
+                    <label style="grid-column:span 2">Footer Text<input id="set_footer_text"></label>
+                    <label style="grid-column:span 2">Social Links (JSON)<textarea id="set_social_links" placeholder='{"linkedin":"https://..."}'></textarea></label>
+                </div>
+                <div class="admin-actions"><button class="btn btn-outline" id="saveSettingsBtn">Save Settings</button></div>
+            </section>
+
+            <section class="admin-section" id="enquiryRecipientsSection" data-admin-section style="display:none">
+                <h2>Enquiry Recipients</h2>
+                <p class="sub">Every active recipient receives the Microsoft Graph HTML enquiry email.</p>
+                <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addEnquiryRecipientBtn" type="button" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveEnquiryRecipientsBtn" type="button" title="Save selected" aria-label="Save selected"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedRecipientsBtn" type="button" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="recipientsSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearRecipientsSelectionBtn" type="button" title="Cancel selected edits" aria-label="Cancel selected edits"><span class="action-icon" aria-hidden="true">×</span></button></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllRecipients" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Name</th><th>Email Address</th><th>Recipient Order</th><th>Receive Enquiries</th></tr></thead><tbody id="enquiryRecipientRows"></tbody></table></div>
+            </section>
+
+            <section class="admin-section" id="importExportSection" data-admin-section style="display:none">
+                <h2>Import / Export</h2>
+                <p class="sub">Blank UUID inserts. Existing UUID updates. No deletion occurs from omitted rows.</p>
+                <div class="admin-actions">
+                    <button class="btn btn-outline" id="downloadProductsTemplate">Products Master Template</button>
+                    <button class="btn btn-outline" id="exportProductsMaster">Export Products Master</button>
+                    <label class="btn btn-outline">Import Products Master<input type="file" id="importProductsMasterFile" accept=".xlsx,.xls,.csv,.txt,.json" hidden></label>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn btn-outline" id="downloadPricingTemplate">Product Pricing Template</button>
+                    <button class="btn btn-outline" id="exportPricingRows">Export Product Pricing</button>
+                    <label class="btn btn-outline">Import Product Pricing<input type="file" id="importPricingFile" accept=".xlsx,.xls,.csv,.txt,.json" hidden></label>
+                    <button class="btn btn-outline" id="downloadGradesTemplate">Grade Master Template</button>
+                    <button class="btn btn-outline" id="exportGradeRows">Export Grade Master</button>
+                    <label class="btn btn-outline">Import Grade Master<input type="file" id="importGradesFile" accept=".xlsx,.xls,.csv,.txt,.json" hidden></label>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
