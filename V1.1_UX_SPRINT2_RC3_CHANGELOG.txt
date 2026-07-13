@@ -1,0 +1,13 @@
+BCSPL Website V1.1 UX — Sprint 2 RC3
+
+Implemented approved industrial homepage direction:
+- Restored the full company value statement with the word “metal”.
+- Added a darker steel plant background and coil visual treatment.
+- Replaced emoji/symbol trust icons with consistent line SVG icons.
+- Rebalanced desktop hero columns and expanded the left content plane.
+- Converted product descriptions into compact bullet lists.
+- Added visible “View Products” labels to product segment cards.
+- Reduced empty card space and improved card proportions.
+- Redesigned mobile product segments into compact three-column cards (two columns on very narrow phones).
+- Converted the lower benefits section into a compact dark professional strip.
+- Preserved Supabase, product, pricing, enquiry, admin and search logic.

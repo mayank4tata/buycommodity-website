@@ -1,0 +1,10 @@
+BCSPL Website Version 1.1 UX - Sprint 2 RC7
+
+Changes:
+- Rebalanced homepage hero with sharp steel-coil composition on the right.
+- Updated headline to Connecting Every Partner in the Metal Supply Chain.
+- Retained a large, prominent search experience.
+- Replaced About Us leaf artwork with a balanced full-petal composition.
+- Left-aligned Contact Us heading and description.
+- Moved Send Enquiry Now into a dedicated closing CTA strip.
+- Preserved Supabase, catalogue, pricing and enquiry functionality.

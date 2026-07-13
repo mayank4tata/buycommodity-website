@@ -1,0 +1,11 @@
+BCSPL Website v1.1 UX - Sprint 2 RC7.8
+
+Scope: Desktop homepage hero image positioning only.
+
+Changes:
+1. Kept the existing six-coil CR warehouse image and dedicated image layer.
+2. Positioned the image from the top-right of the hero instead of using a fixed top offset.
+3. Sized the image by hero height rather than viewport width.
+4. Applied controlled 92% scaling from the right centre so more receding coils remain visible above the search panel.
+5. Retained no-repeat, no-stretch and single-layer behaviour.
+6. No changes to text, search, CTAs, trust strip, mobile layout, backend or other pages.

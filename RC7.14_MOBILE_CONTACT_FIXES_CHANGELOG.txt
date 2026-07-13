@@ -1,0 +1,9 @@
+BCSPL Website V1.1 UX Sprint 2 RC7.14
+
+Changes:
+- Canonicalized Products-page Contact content and redirected legacy products.html#contact URLs to index.html#contact.
+- Rebuilt the mobile search control as one complete three-column row with a visible right-side search button.
+- Converted the mobile hero trust indicators into a 2 x 2 grid.
+- Aligned Explore Products and Price Enquiry buttons to the same mobile width and margins.
+- Applied the mobile even-number rule: when the active homepage segment count is odd, only the final card is hidden on mobile; desktop still shows all segments.
+- Preserved the View All Product Segments link for access to the full catalogue.

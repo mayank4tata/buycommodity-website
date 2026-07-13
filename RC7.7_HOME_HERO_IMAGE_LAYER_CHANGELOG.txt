@@ -1,0 +1,12 @@
+BCSPL Website V1.1 UX Sprint 2 RC7.7
+
+Scope: Desktop homepage hero image layer only.
+
+Changes:
+- Replaced desktop CSS background rendering with one dedicated image element.
+- Preserved the existing six-coil CR warehouse asset.
+- Positioned the image so multiple receding coils remain visible above the search panel.
+- Kept warehouse pallets/floor visible beneath and around the search panel.
+- Added a controlled left-to-right gradient overlay for text readability.
+- Prevented repeat, stretch, duplicate layer and cover-crop behaviour.
+- No mobile, content, search, CTA, trust strip, product, About, Contact, Supabase or admin changes.

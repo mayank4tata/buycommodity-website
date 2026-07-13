@@ -1,0 +1,8 @@
+BCSPL Website V1.1 UX - Sprint 2 RC4
+
+1. Corrected mobile product-section width so the white background spans the full viewport.
+2. Applied a richer premium gold gradient to Explore Products and Search actions.
+3. Replaced the Search text with a magnifying-glass icon on mobile; desktop retains icon plus text.
+4. Increased homepage segment rendering to six, while desktop continues to display only the first five.
+5. Mobile displays up to six product segments in a compact grid.
+6. No database, Supabase, admin, pricing or enquiry logic changes.

@@ -1,0 +1,13 @@
+BCSPL Website v1.1 UX - Sprint 2 RC1
+
+Implemented:
+1. Product search is now placed before product segment cards.
+2. Product segments have a clear section heading and CTA-led layout.
+3. Mobile product cards are compact horizontal cards with constrained images.
+4. Product descriptions are clamped on mobile to prevent oversized cards.
+5. Quality benefits moved out of the hero into a compact dedicated 2x2 mobile grid.
+6. Hero typography, spacing, search controls and CTA buttons refined for mobile.
+7. About visual is hidden on small screens to reduce unnecessary scrolling.
+8. Desktop/tablet layouts remain responsive; no database, Supabase or admin changes.
+
+Test widths: 360px, 390px, 412px, tablet and desktop.

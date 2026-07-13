@@ -1,0 +1,8 @@
+BCSPL Website V1.1 UX Sprint 2 RC7.4
+
+Scope: Homepage hero image correction only.
+
+Change:
+- Removed the legacy .hero::after secondary coil-image overlay.
+- The hero now displays only the single RC7.3 multi-coil background image.
+- No layout, text, search, mobile, product, Supabase, admin, or other-page changes.

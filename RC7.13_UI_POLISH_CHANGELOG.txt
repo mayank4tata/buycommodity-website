@@ -1,0 +1,19 @@
+BCSPL Website V1.1 UX Sprint 2 - RC7.13
+
+Scope: Controlled homepage/mobile/contact/statistics polish based on RC7.12.
+
+Changes:
+1. Moved the gold divider above the hero brand promise and increased spacing before the company introduction.
+2. Added black breathing space below the desktop Quality Assured trust strip before the white product section.
+3. Removed the six-segment frontend limit; all active Supabase product segments are now rendered in display order.
+4. Added functional previous/next carousel navigation. Desktop shows six cards at a time and scrolls through remaining cards.
+5. Mobile shows all active segments in a two-column grid.
+6. Redesigned Competitive Pricing / Pan India Supply / Quality Material / Enquiry Support as separate gold-bordered cards.
+7. Updated supply capability to 5000+ MT monthly supply capability.
+8. Contact heading now starts directly with Buy Commodity Solutions Private Limited.
+9. Corrected mobile search-bar width, icon/input alignment, and placeholder sizing.
+10. Corrected mobile Explore Products and Price Enquiry button widths.
+11. Corrected the complete border and margins of View All Product Segments.
+12. Reduced mobile statistics block height.
+
+No database schema, Supabase policy, enquiry workflow, admin authentication, pricing logic, or hero image changes were made.

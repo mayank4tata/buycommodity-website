@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Buy Commodity | Commodity Trade Platform</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rc7.12-hero.css">
+    <link rel="stylesheet" href="css/rc7.13-polish.css">
+    <link rel="stylesheet" href="css/rc7.14-fixes.css">
+    <link rel="stylesheet" href="css/rc7.15-fixes.css">
 </head>
 <body>
     <header class="topbar">
@@ -13,7 +17,8 @@
                 <img src="assets/header-logo-icon-v3.png" alt="Buy Commodity">
                 <div><b>BUY COMMODITY</b><span>Building Trust. Delivering Strength.</span></div>
             </a>
-            <nav class="menu">
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primaryMenu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <nav class="menu" id="primaryMenu">
                 <a class="active" href="index.html">HOME</a>
                 <a href="index.html#about">ABOUT US</a>
                 <a href="enquiry.html">PRICES &amp; ENQUIRY</a>
@@ -23,37 +28,74 @@
             <a class="call" data-call>☎ <span data-phone></span></a>
         </div>
     </header>
+    <button class="menu-backdrop" type="button" aria-label="Close navigation" hidden></button>
 
-    <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-copy">
-                <h1>One Platform.<span>Every Partner.</span><em>Seamless Trade.</em></h1>
+    <section class="hero hero-v11">
+        <div class="hero-scene-window" aria-hidden="true">
+            <img class="hero-scene-desktop" src="assets/hero-cr-coils-floor-user-rc712.png" alt="">
+        </div>
+        <div class="hero-scene-overlay" aria-hidden="true"></div>
+        <div class="container hero-v11-inner">
+            <div class="hero-copy hero-v11-copy">
+                <h1 class="hero-headline">Connecting <span>Every Partner</span><em>in the Metal Supply Chain</em></h1>
                 <div class="markline"></div>
-                <p>Buy Commodity brings buyers, sellers, financiers, transporters and service providers together on one transparent, technology-driven platform — making commodity procurement simpler, faster and more dependable.</p>
-                <div class="badges">
-                    <div class="badge"><span class="badge-icon"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.7-3 8.3-7 10-4-1.7-7-5.3-7-10V6l7-3z"></path><path d="M8.5 12.5l2.2 2.2 4.8-5"></path></svg></span><span>Quality<br>Assured</span></div>
-                    <div class="badge"><span class="badge-icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3z"></path><path d="M14 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="2"></circle><circle cx="18" cy="18" r="2"></circle></svg></span><span>Timely<br>Delivery</span></div>
-                    <div class="badge"><span class="badge-icon"><svg viewBox="0 0 24 24"><path d="M7 5h10"></path><path d="M7 9h10"></path><path d="M8 5c5 0 5 8 0 8h-1l8 6"></path></svg></span><span>Competitive<br>Pricing</span></div>
-                    <div class="badge"><span class="badge-icon"><svg viewBox="0 0 24 24"><path d="M7 12l3 3 7-7"></path><path d="M4 20h16"></path><path d="M6 4h12v4H6z"></path></svg></span><span>Trusted<br>Execution</span></div>
-                </div>
-            </div>
-            <div class="hero-side">
-                <div class="hero-products" id="featuredProducts"></div>
-                <div class="hero-search-panel" aria-label="Product search">
-                    <div class="hero-search-title">Search Products, Grades, Sizes &amp; Specifications</div>
-                    <div class="hero-search-sub">Search across segment, category, product, grade, specification and size / thickness.</div>
+                <div class="hero-brandline">One Platform. <strong>Every Partner.</strong> Seamless Trade.</div>
+                <p class="hero-value hero-value-desktop">Buy Commodity brings metal buyers, sellers, mills, recyclers, financiers, logistics partners and service providers together on one transparent, technology-driven platform — making metal trade simpler, faster and more dependable.</p>
+                <p class="hero-value hero-value-mobile">Connecting metal buyers, sellers, mills, recyclers, finance and logistics partners on one transparent platform for faster, more dependable metal trade.</p>
+
+                <div class="hero-search-panel hero-search-inline" aria-label="Product search">
+                    <div class="hero-search-kicker">Find What You Need, Fast</div>
                     <div class="hero-search-row">
-                        <input id="homeSearch" type="search" placeholder="Try: HR Coil, SS 304, 2.5 mm, Channel, 100x50">
-                        <button id="homeSearchBtn" type="button">Search</button>
-                        <button id="homeSearchClear" type="button">Clear</button>
+                        <span class="search-leading-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></span>
+                        <input id="homeSearch" type="search" placeholder="Search products, grades, sizes or specifications...">
+                        <button id="homeSearchBtn" class="search-icon-btn" type="button" aria-label="Search products" title="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button>
+                        <button id="homeSearchClear" class="search-clear-inline" type="button" aria-label="Clear search">×</button>
                     </div>
+                    <div class="hero-search-label">Popular Searches</div>
                     <div class="hero-search-chips" id="homeSearchChips"></div>
                     <div class="hero-search-results" id="homeSearchResults"></div>
                 </div>
-                <div class="hero-actions">
+
+                <div class="hero-actions hero-actions-left">
                     <a class="btn btn-gold hero-btn" href="products.html">Explore Products <span>&rarr;</span></a>
-                    <a class="btn btn-outline hero-btn" href="enquiry.html">Send Enquiry <span>&rarr;</span></a>
+                    <a class="btn btn-outline hero-btn" href="enquiry.html">Price Enquiry <span>&rarr;</span></a>
                 </div>
+                <div class="hero-trust-strip" aria-label="Why customers choose BCSPL">
+                    <div><span class="trust-svg"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v6c0 5-3.4 8.3-8 9-4.6-.7-8-4-8-9V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><b>Quality Assured</b><small>Verified sourcing</small></div>
+                    <div><span class="trust-svg"><svg viewBox="0 0 24 24"><path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><b>On-Time Delivery</b><small>Reliable logistics</small></div>
+                    <div><span class="trust-svg"><svg viewBox="0 0 24 24"><path d="M7 4h10M7 8h10M9 4c4 0 5 6 0 6h-2l8 10"/></svg></span><b>Competitive Pricing</b><small>Commercial value</small></div>
+                    <div><span class="trust-svg"><svg viewBox="0 0 24 24"><path d="m3 12 4-4 4 4-4 4-4-4Zm10 0 4-4 4 4-4 4-4-4Z"/><path d="m9 10 3-3 3 3M9 14l3 3 3-3"/></svg></span><b>Trusted Partner</b><small>Dependable execution</small></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-segments-v11" aria-labelledby="homeSegmentsTitle">
+        <div class="container">
+            <div class="home-segment-heading">
+                <span>Explore Our Product Range</span>
+                <h2 id="homeSegmentsTitle">Browse Metal Categories</h2>
+            </div>
+            <div class="segment-carousel-shell">
+                <button class="segment-arrow segment-prev" type="button" aria-label="Previous product segments">‹</button>
+                <div class="hero-products segment-carousel" id="featuredProducts"></div>
+                <button class="segment-arrow segment-next" type="button" aria-label="Next product segments">›</button>
+            </div>
+            <a class="view-all-segments" href="products.html">View All Product Segments →</a>
+        </div>
+    </section>
+
+    <section class="quality-section" aria-labelledby="whyBcsplTitle">
+        <div class="container">
+            <div class="quality-heading">
+                <span>Why Choose BCSPL</span>
+                <h2 id="whyBcsplTitle">Built for dependable industrial procurement</h2>
+            </div>
+            <div class="quality-grid">
+                <div class="quality-item"><span class="quality-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h10M7 8h10M9 4c4 0 5 6 0 6h-2l8 10"/></svg></span><div><b>Competitive Pricing</b><small>Best commercial value through dependable sourcing</small></div></div>
+                <div class="quality-item"><span class="quality-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-4.2 7-11a7 7 0 1 0-14 0c0 6.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/><path d="M4 18h4M16 18h4"/></svg></span><div><b>Pan India Supply</b><small>Strong sourcing and delivery network across India</small></div></div>
+                <div class="quality-item"><span class="quality-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 20 6v6c0 5-3.4 8.3-8 9-4.6-.7-8-4-8-9V6l8-3Z"/><path d="m8.5 12 2.2 2.2 4.8-5"/></svg></span><div><b>Quality Material</b><small>Sourced from trusted mills and manufacturers</small></div></div>
+                <div class="quality-item"><span class="quality-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h3v6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 1-2ZM20 13h-3v6h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-1-2Z"/><path d="M17 19c0 1-2 2-5 2"/></svg></span><div><b>Enquiry Support</b><small>Quick response and dedicated support for requirements</small></div></div>
             </div>
         </div>
     </section>
@@ -69,14 +111,14 @@
                 <p>Our platform reduces friction across the transaction lifecycle — from product discovery and pricing to credit evaluation, logistics coordination, documentation and transaction support.</p>
                 <p>Whether sourcing material, supplying to customers, arranging finance or coordinating movement, Buy Commodity brings every stakeholder onto one platform with greater visibility, confidence and control.</p>
             </div>
-            <div class="leaf-visual-wrap"><img class="leaf-visual" src="assets/steel-leaf-logo-v2.png" alt="Buy Commodity steel product leaf visual"></div>
+            <div class="leaf-visual-wrap"><img class="leaf-visual" src="assets/steel-leaf-logo-rc7.png" alt="Buy Commodity steel product leaf visual"></div>
         </div>
     </section>
 
     <section class="stats">
         <div class="container stats-grid">
             <div class="stat"><b>60+</b>Years cumulative experience</div>
-            <div class="stat"><b>500+</b>MT monthly supply capability</div>
+            <div class="stat"><b>5000+</b>MT monthly supply capability</div>
             <div class="stat"><b>Pan India</b>Supply coordination</div>
             <div class="stat"><b>Multi-party</b>Buyer, seller, finance &amp; logistics ecosystem</div>
             <div class="stat"><b>Tech Driven</b>For transparent procurement</div>
@@ -85,9 +127,9 @@
 
     <footer id="contact" class="contact-section">
         <div class="container">
-            <div class="contact-head">
+            <div class="contact-head contact-head-rc7">
                 <span>Contact Us</span>
-                <h2>Connect with Buy Commodity Solutions Private Limited</h2>
+                <h2>Buy Commodity Solutions Private Limited</h2>
                 <p>Share your product, specification, quantity and delivery location. Our team will get back to you with the right support.</p>
             </div>
             <div class="contact-grid">
@@ -99,9 +141,20 @@
                 <div class="contact-card address-card"><small>Corporate Office</small><b data-corporate-address></b></div>
                 <div class="contact-card address-card"><small>GST Address</small><b data-gst-address></b></div>
             </div>
-            <div class="contact-action"><a class="btn btn-gold" href="enquiry.html">Send Enquiry Now &rarr;</a></div>
+            <div class="contact-cta-strip">
+                <div><b>Need support with a requirement?</b><span>Share the product, grade, quantity and delivery location with our team.</span></div>
+                <a class="btn btn-gold" href="enquiry.html">Send Enquiry Now &rarr;</a>
+            </div>
         </div>
     </footer>
+
+    <nav class="mobile-bottom-nav" aria-label="Mobile quick navigation">
+        <a class="active" href="index.html"><span>⌂</span><b>Home</b></a>
+        <a href="products.html"><span>▦</span><b>Products</b></a>
+        <a class="bottom-enquiry" href="enquiry.html"><span>✎</span><b>Enquiry</b></a>
+        <a href="enquiry.html"><span>₹</span><b>Prices</b></a>
+        <a href="#contact"><span>☎</span><b>Contact</b></a>
+    </nav>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>

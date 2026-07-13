@@ -1,0 +1,12 @@
+BCSPL Website V1.1 UX Sprint 2 RC7.2
+Homepage desktop alignment refinement only.
+
+Changes:
+- Rebalanced the hero against the approved RC7 desktop mock.
+- Scaled and repositioned the coil image to show more depth and reduce domination by one coil.
+- Restored full visibility and spacing of the hero headline.
+- Increased the desktop search panel width and retained it as the primary platform action.
+- Tightened vertical spacing between hero copy, search, CTAs and trust strip.
+- Reduced the white gap before the product range section.
+- Refined Product Range heading size, colour and card spacing.
+- No changes to About, Contact, Products, Prices/Enquiry, Supabase or admin logic.

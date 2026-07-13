@@ -1,0 +1,76 @@
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.15 targeted corrections
+   - stable cross-page About/Contact anchors
+   - dedicated Pig Iron / Scrap / Rounds homepage icons
+   - tighter, vertically balanced desktop hero trust area
+   - desktop product heading moved upward and kicker enlarged
+   - mobile CTA-first ordering: Search -> CTAs -> Trust tiles
+   ========================================================= */
+
+#about,
+#contact {
+  scroll-margin-top: 92px;
+}
+
+.home-icon img[src*="icon-segment-pig-iron"],
+.home-icon img[src*="icon-segment-scrap"],
+.home-icon img[src*="icon-segment-rounds"] {
+  width: 34px !important;
+  height: 34px !important;
+  object-fit: contain !important;
+  filter: none !important;
+}
+
+@media (min-width: 901px) {
+  /* Keep the trust card visually centred while removing the unused black tail. */
+  .hero.hero-v11 {
+    padding-bottom: 10px !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip {
+    margin-top: 16px !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Pull the white product section upward, without touching mobile spacing. */
+  .home-segments-v11 {
+    padding-top: 20px !important;
+  }
+
+  .home-segments-v11 .home-segment-heading {
+    margin-top: 0 !important;
+    margin-bottom: 15px !important;
+  }
+
+  .home-segments-v11 .home-segment-heading span {
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    letter-spacing: 1.25px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  /* The hero copy is a grid on mobile. Lock the requested visual order. */
+  .hero-v11-copy .hero-search-inline {
+    order: 2 !important;
+  }
+
+  .hero-v11-copy .hero-actions-left {
+    order: 3 !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip {
+    order: 4 !important;
+    margin-top: 0 !important;
+    margin-bottom: 16px !important;
+  }
+
+  .home-icon img[src*="icon-segment-pig-iron"],
+  .home-icon img[src*="icon-segment-scrap"],
+  .home-icon img[src*="icon-segment-rounds"] {
+    width: 22px !important;
+    height: 22px !important;
+  }
+}

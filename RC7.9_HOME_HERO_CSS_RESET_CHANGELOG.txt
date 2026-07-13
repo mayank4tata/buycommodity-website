@@ -1,0 +1,10 @@
+BCSPL Website v1.1 UX Sprint 2 RC7.9
+
+Scope: desktop homepage hero scene only.
+
+- Added a final isolated stylesheet loaded after the legacy stylesheet.
+- Added a bounded hero image viewport from 27% of the hero width to the right edge.
+- Fitted the complete multi-coil CR panorama with object-fit: contain.
+- Removed transforms, width-by-viewport sizing, background cover and repeat behaviour.
+- Replaced the opaque legacy gradient with a controlled readability overlay.
+- Kept mobile and all other pages unchanged.

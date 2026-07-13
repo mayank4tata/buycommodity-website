@@ -1,0 +1,13 @@
+BCSPL Website v1.1 UX Sprint 2 - RC7.6
+
+Scope: Desktop homepage only.
+
+Changes:
+1. Added a clean six-CR-coil warehouse hero asset.
+2. Reduced the coil image scale and positioned it at the far right.
+3. Aligned the foreground coil near the end of the desktop search panel.
+4. Retained one hero image layer with no repeat or legacy overlay.
+5. Reset and aligned the trust strip to the main desktop content width.
+6. Divided the trust strip into four equal columns with consistent icon and text alignment.
+
+No mobile, Supabase, admin, products, enquiry, About, Contact, or other page changes.

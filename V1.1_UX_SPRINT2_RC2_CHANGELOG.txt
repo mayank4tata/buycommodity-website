@@ -1,0 +1,16 @@
+BCSPL Website Version 1.1 UX — Sprint 2 RC2
+
+Implemented:
+- Moved Explore Products and Check Prices & Enquiry CTAs into desktop/mobile hero copy.
+- Added compact hero trust strip: Quality, Delivery, Pricing and Trusted Partner.
+- Repositioned product search high in mobile hierarchy.
+- Retained working search IDs and existing Supabase-backed product segment rendering.
+- Redesigned mobile product segments as compact two-column cards.
+- Converted lower Why Choose BCSPL section into four practical customer benefits.
+- Added five-item mobile bottom navigation with highlighted Enquiry action.
+- Preserved desktop navigation, backend, admin, database and enquiry logic.
+
+Testing focus:
+- 360px, 390px, 412px mobile widths.
+- Desktop widths 1366px and 1920px.
+- Search, chips, product links, CTAs, hamburger menu and bottom navigation.

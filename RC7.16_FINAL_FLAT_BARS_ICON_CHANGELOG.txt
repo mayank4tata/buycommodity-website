@@ -1,0 +1,7 @@
+BCSPL Website V1.1 - UX Sprint 2 RC7.16 FINAL
+
+Final targeted change:
+1. Added a dedicated scalable SVG icon for the Flat Bars / Flats Bars homepage product segment.
+2. Updated homepage segment icon resolution so segment names containing "flat" use the new flat-bars icon, while combined Rounds & Flats and Angles & Flats keep their existing icons.
+
+No layout, database, Supabase, admin, pricing, enquiry, hero-image, navigation, mobile or other page changes.

@@ -1346,3 +1346,1039 @@ body:has(.admin-wrap){background:#f5f3ed;}
 .selected-product-empty{padding:18px!important;border:0!important;background:#fff!important;text-align:center;color:#746955}
 @media(max-width:900px){.selected-product-row{grid-template-columns:76px minmax(240px,1fr) 110px 125px!important}.pricing-option-details{grid-template-columns:1fr 1fr}}
 @media(max-width:700px){.enquiry-options-scroll{max-height:58vh;padding:8px}.enquiry-option-toolbar{align-items:flex-start;flex-direction:column}.selected-product-row{grid-template-columns:1fr 1fr!important;align-items:end!important}.pricing-option-check,.pricing-option-details{grid-column:1/-1}.pricing-option-details{grid-template-columns:1fr 1fr}.selected-product-row>label:not(.pricing-option-check){width:100%}}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - Sprint 1: Mobile navigation
+   ========================================================= */
+.menu-toggle{display:none;width:46px;height:46px;border:1px solid #eadfca;border-radius:10px;background:#fff;align-items:center;justify-content:center;flex-direction:column;gap:5px;padding:0;cursor:pointer;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.menu-toggle span{display:block;width:22px;height:2px;background:#111;border-radius:99px;transition:transform .2s ease,opacity .2s ease}
+.menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.menu-backdrop{position:fixed;inset:0;z-index:48;border:0;background:rgba(0,0,0,.46);padding:0}
+body.menu-open{overflow:hidden}
+.crumb a{color:#fff;font-weight:800}
+.crumb a:hover,.crumb a:focus-visible{color:var(--gold2)}
+
+@media(max-width:1180px){
+  .topbar{z-index:60}
+  .topbar .nav{min-height:68px!important;height:68px!important;padding:7px 0!important;gap:12px!important}
+  .topbar .brand{min-height:0!important;height:auto!important;gap:9px!important;min-width:0}
+  .topbar .brand img{width:38px!important;height:44px!important;max-width:38px!important;max-height:44px!important;flex:0 0 38px!important;object-fit:contain}
+  .topbar .brand b{font-size:20px!important;line-height:1.05;white-space:nowrap}
+  .topbar .brand span{font-size:10.5px!important;line-height:1.2;white-space:nowrap}
+  .topbar .call{display:none!important}
+  .menu-toggle{display:flex;flex:0 0 46px;position:relative;z-index:62}
+  .topbar .menu{display:flex!important;position:fixed;z-index:61;top:0;right:0;width:min(86vw,360px);height:100dvh;background:#fff;flex-direction:column;gap:0!important;padding:88px 22px 28px;box-shadow:-20px 0 46px rgba(0,0,0,.2);transform:translateX(105%);transition:transform .24s ease;overflow-y:auto}
+  body.menu-open .topbar .menu{transform:translateX(0)}
+  .topbar .menu a{display:flex;align-items:center;min-height:54px;padding:13px 5px!important;border-bottom:1px solid #eee!important;border-left:4px solid transparent;font-size:15px;letter-spacing:.2px}
+  .topbar .menu a.active{color:#b77b00;border-left-color:var(--gold)!important;padding-left:13px!important;background:#fff8ec}
+  .topbar .menu a:hover{border-bottom-color:#eee!important}
+}
+
+@media(max-width:420px){
+  .topbar .brand b{font-size:18px!important}
+  .topbar .brand span{font-size:9.5px!important}
+  .topbar .brand img{width:34px!important;max-width:34px!important;flex-basis:34px!important}
+  .menu-toggle{width:43px;height:43px;flex-basis:43px}
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - Sprint 2A/2B: Homepage mobile UX
+   Scope: section priority, compact product cards, quality grid
+   ========================================================= */
+.home-segment-heading{margin:20px 0 12px;color:#fff}
+.home-segment-heading span,.quality-heading span{display:block;color:var(--gold2);font-size:12px;font-weight:900;letter-spacing:1px;text-transform:uppercase}
+.home-segment-heading h2{margin:4px 0 0;font-size:27px;line-height:1.1;color:#fff}
+.quality-section{padding:38px 0;background:#fff8ec;border-top:1px solid #f0dfbc;border-bottom:1px solid #f0dfbc}
+.quality-heading{text-align:center;margin-bottom:22px}
+.quality-heading span{color:#b47700}
+.quality-heading h2{margin:6px 0 0;font-size:31px;line-height:1.12}
+.quality-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.quality-item{display:flex;align-items:center;gap:13px;min-height:88px;padding:15px;border:1px solid #ead8b2;border-radius:14px;background:#fff;box-shadow:0 9px 22px rgba(0,0,0,.045)}
+.quality-icon{display:grid;place-items:center;flex:0 0 44px;width:44px;height:44px;border-radius:12px;background:#fff4d7;color:#b47700}
+.quality-icon svg,.badge-icon svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.quality-item b{display:block;font-size:14px;line-height:1.2}
+.quality-item small{display:block;margin-top:4px;color:#6b6254;font-size:11.5px;line-height:1.3}
+
+@media(max-width:1180px){
+  .hero-grid{grid-template-columns:1fr!important;gap:18px!important;align-items:start!important}
+  .hero-copy{max-width:780px}
+  .hero-side{display:flex;flex-direction:column}
+  .hero-search-panel{order:1;margin:4px 0 15px!important}
+  .home-segment-heading{order:2}
+  .hero-products{order:3}
+  .hero-actions{order:4}
+  .quality-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+  .hero{padding:24px 0 30px!important;background-position:center!important}
+  .hero-grid{gap:12px!important}
+  .hero h1{font-size:clamp(31px,10vw,42px)!important;line-height:1.02!important;margin-bottom:12px!important}
+  .markline{margin:12px 0!important}
+  .hero p{font-size:14px!important;line-height:1.48!important;margin:0 0 14px!important}
+  .hero-search-panel{padding:14px!important;border-radius:13px!important;box-shadow:0 14px 30px rgba(0,0,0,.24)!important}
+  .hero-search-title{font-size:19px!important}
+  .hero-search-sub{font-size:12px!important;line-height:1.35!important}
+  .hero-search-row{grid-template-columns:1fr auto!important;gap:8px!important}
+  .hero-search-row input{grid-column:1/-1;height:44px!important;font-size:13px!important}
+  .hero-search-row button{height:42px!important;padding:0 14px!important}
+  .hero-search-chips{gap:6px!important;margin-top:9px!important}
+  .hero-search-chips button{padding:6px 9px!important;font-size:11px!important}
+  .home-segment-heading{margin:10px 0 9px!important}
+  .home-segment-heading h2{font-size:23px!important}
+  .hero-products{grid-template-columns:1fr!important;gap:11px!important}
+  .home-cat-card{display:grid!important;grid-template-columns:118px minmax(0,1fr)!important;min-height:124px!important;height:124px!important;text-align:left!important;border-radius:12px!important;box-shadow:0 12px 24px rgba(0,0,0,.24)!important}
+  .home-cat-visual{height:124px!important;border-bottom:0!important;border-right:1px solid rgba(213,150,0,.38)!important}
+  .home-cat-body{padding:13px 30px 12px 13px!important;justify-content:center!important;min-width:0}
+  .home-cat-body h3{font-size:17px!important;margin:0 0 5px!important;line-height:1.08!important}
+  .home-cat-body p{font-size:11.5px!important;line-height:1.32!important;min-height:0!important;padding:0!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+  .home-cat-card:after{display:none!important}
+  .home-cat-card:hover{transform:none!important}
+  .home-icon{width:34px!important;height:34px!important;left:101px!important;top:10px!important}
+  .home-icon img{width:25px!important;height:25px!important}
+  .card-arrow{right:11px!important;bottom:9px!important;font-size:18px!important}
+  .hero-actions{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;margin-top:14px!important}
+  .hero-btn{width:100%!important;min-height:46px!important;padding:11px 14px!important}
+  .quality-section{padding:28px 0!important}
+  .quality-heading{text-align:left!important;margin-bottom:14px!important}
+  .quality-heading h2{font-size:25px!important}
+  .quality-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+  .quality-item{min-height:88px!important;align-items:flex-start!important;gap:9px!important;padding:11px!important;border-radius:11px!important}
+  .quality-icon{flex-basis:34px;width:34px;height:34px;border-radius:9px}
+  .quality-icon svg{width:20px;height:20px}
+  .quality-item b{font-size:12px!important}
+  .quality-item small{font-size:10px!important;line-height:1.25!important}
+  .about-section{padding-top:30px!important}
+  .about-copy-final{padding-bottom:14px!important}
+  .leaf-visual-wrap{display:none!important}
+}
+
+@media(max-width:390px){
+  .home-cat-card{grid-template-columns:104px minmax(0,1fr)!important;height:116px!important;min-height:116px!important}
+  .home-cat-visual{height:116px!important}
+  .home-icon{left:87px!important}
+  .quality-grid{grid-template-columns:1fr 1fr!important}
+  .quality-item{padding:9px!important;gap:7px!important}
+  .quality-icon{flex-basis:30px;width:30px;height:30px}
+}
+
+/* ==========================================================
+   BCSPL Website V1.1 UX — Sprint 2 RC2 final homepage concept
+   ========================================================== */
+.hero-grid{grid-template-columns:minmax(360px,.88fr) minmax(0,1.72fr)!important;align-items:start!important}
+.hero-copy{padding-top:4px}
+.hero-value{font-size:18px!important;line-height:1.55!important;max-width:470px!important;margin:0 0 20px!important}
+.hero-actions-left{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important;margin:22px 0 20px!important;width:100%!important;max-width:500px!important}
+.hero-actions-left .hero-btn{min-height:54px!important;padding:12px 16px!important}
+.hero-actions-left .btn-outline{background:transparent!important;color:#fff!important;border:1.5px solid var(--gold2)!important}
+.hero-trust-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:520px;border:1px solid rgba(213,150,0,.32);background:rgba(0,0,0,.28);border-radius:14px;padding:14px 8px;margin-top:8px;backdrop-filter:blur(5px)}
+.hero-trust-strip>div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;padding:0 8px;border-right:1px solid rgba(255,255,255,.14)}
+.hero-trust-strip>div:last-child{border-right:0}.hero-trust-strip span{color:var(--gold2);font-size:22px;line-height:1}.hero-trust-strip b{font-size:10px;line-height:1.25;text-transform:uppercase;letter-spacing:.25px;color:#fff}
+.hero-search-panel{margin-top:0!important}
+.hero-search-kicker{color:#b77b00;font-size:12px;font-weight:950;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.home-segment-heading{margin-top:20px}
+.mobile-bottom-nav{display:none}
+.quality-icon{font-size:28px!important;font-weight:900!important}
+
+@media (min-width:1181px){
+  .hero{padding-top:34px!important;padding-bottom:42px!important}
+  .hero-copy{position:sticky;top:112px}
+  .hero-products{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+}
+
+@media (max-width:1180px){
+  .hero-grid{grid-template-columns:1fr!important}
+  .hero-copy{display:grid;grid-template-columns:1fr;max-width:820px}
+  .hero-actions-left,.hero-trust-strip{max-width:760px!important}
+}
+
+@media (max-width:700px){
+  body{padding-bottom:70px}
+  .hero{padding:18px 0 26px!important;background-position:62% center!important}
+  .hero-grid{display:flex!important;flex-direction:column!important;gap:14px!important}
+  .hero-copy{width:100%;padding:0!important}
+  .hero h1{font-size:34px!important;line-height:1.04!important;margin:2px 0 10px!important}
+  .markline{display:none}
+  .hero-value{font-size:15px!important;line-height:1.45!important;max-width:330px!important;margin-bottom:12px!important}
+  .hero-actions-left{grid-template-columns:1fr!important;gap:9px!important;margin:12px 0 13px!important;max-width:none!important}
+  .hero-actions-left .hero-btn{min-height:48px!important;font-size:14px!important}
+  .hero-trust-strip{order:3;grid-template-columns:repeat(4,1fr);max-width:none!important;width:100%;padding:11px 3px;margin:0!important;border-radius:12px}
+  .hero-trust-strip>div{padding:0 3px}.hero-trust-strip span{font-size:19px}.hero-trust-strip b{font-size:8.5px}
+  .hero-side{display:contents!important}
+  .hero-search-panel{order:2;margin:0!important;padding:14px!important;border-radius:14px!important}
+  .hero-search-kicker{font-size:11px}
+  .hero-search-title{font-size:19px!important;line-height:1.16!important}
+  .hero-search-sub{display:none}
+  .hero-search-row{grid-template-columns:1fr auto!important;gap:8px!important}
+  #homeSearchClear{display:none!important}
+  .hero-search-row input{min-width:0!important;font-size:13px!important}
+  .hero-search-row button{padding:10px 13px!important}
+  .hero-search-chips{gap:7px!important;margin-top:10px!important}
+  .hero-search-chips button{font-size:10.5px!important;padding:7px 10px!important}
+  .home-segment-heading{order:4;text-align:center;margin:10px 0 0!important}
+  .home-segment-heading h2{font-size:25px!important;margin:3px 0 10px!important}
+  .hero-products{order:5;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;width:100%}
+  .home-cat-card{min-height:210px!important;border-radius:12px!important}
+  .home-cat-visual{height:98px!important}
+  .home-icon{width:42px!important;height:42px!important;top:78px!important;border-width:4px!important;font-size:18px!important}
+  .home-cat-body{padding:28px 8px 11px!important;min-height:108px!important}
+  .home-cat-body h3{font-size:14px!important;line-height:1.05!important;margin-bottom:6px!important}
+  .home-cat-body p{font-size:10.5px!important;line-height:1.28!important;padding:0 5px!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .card-arrow{font-size:15px!important;right:8px!important;bottom:7px!important}
+  .quality-section{padding:26px 0 22px!important}
+  .quality-heading{text-align:center}.quality-heading h2{font-size:24px!important}
+  .quality-grid{grid-template-columns:repeat(2,1fr)!important;gap:10px!important}
+  .quality-item{min-height:112px!important;padding:14px 10px!important;display:flex!important;flex-direction:column!important;text-align:center!important;justify-content:center!important}
+  .quality-item small{font-size:10.5px!important}
+  .mobile-bottom-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);left:0;right:0;bottom:0;height:64px;background:#080b0d;color:#fff;z-index:100;border-top:1px solid rgba(213,150,0,.35);box-shadow:0 -8px 24px rgba(0,0,0,.28);padding:4px 5px 3px}
+  .mobile-bottom-nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;position:relative}
+  .mobile-bottom-nav a>span{font-size:20px;line-height:1}.mobile-bottom-nav a>b{font-size:8.5px;text-transform:uppercase}.mobile-bottom-nav a.active{color:var(--gold2)}
+  .mobile-bottom-nav .bottom-enquiry{width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#fff;align-self:end;justify-self:center;transform:translateY(-11px);box-shadow:0 5px 18px rgba(213,150,0,.45);border:3px solid #111}
+  .mobile-bottom-nav .bottom-enquiry>span{font-size:21px}.mobile-bottom-nav .bottom-enquiry>b{font-size:8px}
+}
+
+/* ==========================================================
+   BCSPL Website V1.1 UX — Sprint 2 RC3 approved visual design
+   Industrial coil hero, professional icons, fuller product cards
+   ========================================================== */
+.hero{
+  background:
+    linear-gradient(90deg,rgba(2,5,7,.96) 0%,rgba(3,7,9,.78) 42%,rgba(4,7,8,.66) 100%),
+    url('../assets/hero-bg-clean.jpg') center/cover no-repeat!important;
+  isolation:isolate;
+}
+.hero:before{
+  left:-145px!important;bottom:-250px!important;width:430px!important;height:430px!important;
+  border-width:30px!important;opacity:.5!important;z-index:-1;
+}
+.hero:after{
+  content:"";position:absolute;z-index:-1;left:29%;bottom:0;width:38%;height:82%;
+  background:url('../assets/products/clean-coil.jpg') center bottom/contain no-repeat;
+  filter:brightness(.72) contrast(1.16) saturate(.72);
+  opacity:.82;mix-blend-mode:screen;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);
+}
+.hero-grid{grid-template-columns:minmax(410px,1.02fr) minmax(0,1.48fr)!important;gap:42px!important;}
+.hero-copy{padding-top:8px!important;position:relative;z-index:2}
+.hero h1{font-size:48px!important;line-height:1.04!important;text-shadow:0 3px 20px rgba(0,0,0,.35)}
+.hero-value{max-width:520px!important;font-size:16px!important;line-height:1.56!important;font-weight:650!important;margin-top:12px!important;color:#fff!important;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.hero-actions-left{max-width:520px!important;margin-top:20px!important}
+.hero-trust-strip{max-width:560px!important;background:rgba(3,6,7,.72)!important;border-color:rgba(245,179,26,.42)!important;box-shadow:0 16px 35px rgba(0,0,0,.22)}
+.trust-svg{display:grid!important;place-items:center;width:32px;height:32px!important;color:var(--gold2)!important}
+.trust-svg svg{width:29px;height:29px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero-side{position:relative;z-index:3}
+.hero-search-panel{background:rgba(8,11,12,.88)!important;color:#fff!important;border-color:rgba(245,179,26,.55)!important;backdrop-filter:blur(10px);box-shadow:0 24px 56px rgba(0,0,0,.38)!important}
+.hero-search-kicker{color:var(--gold2)!important}
+.hero-search-title{color:#fff!important}
+.hero-search-sub{color:#e9e3d8!important}
+.hero-search-row input{background:rgba(255,255,255,.97)!important}
+.hero-search-chips a,.hero-search-chips button{background:rgba(5,8,9,.55)!important;color:#fff!important;border-color:rgba(245,179,26,.54)!important}
+.hero-search-chips a:hover,.hero-search-chips button:hover{background:var(--gold)!important}
+.home-segment-heading{text-align:center;margin-top:24px!important}
+.home-segment-heading h2{font-size:29px!important}
+.hero-products{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:12px!important}
+.home-cat-card{min-height:292px!important;border-radius:11px!important;box-shadow:0 16px 35px rgba(0,0,0,.3)!important}
+.home-cat-visual{height:116px!important}
+.home-cat-body{padding:34px 13px 13px!important;text-align:left!important}
+.home-cat-body h3{text-align:center;font-size:17px!important;margin:0 0 9px!important;min-height:36px;display:flex;align-items:center;justify-content:center}
+.home-cat-body p,.home-cat-body ul{margin:0 0 9px!important;padding:0!important;color:#242424!important;font-size:11.7px!important;line-height:1.38!important;min-height:60px!important}
+.home-cat-body ul{list-style:none}
+.home-cat-body li{position:relative;padding-left:10px;margin-bottom:3px}
+.home-cat-body li:before{content:'•';position:absolute;left:0;color:#b87900;font-weight:900}
+.home-card-link{margin-top:auto;color:#b87900;text-transform:uppercase;font-size:10px;font-weight:900;letter-spacing:.35px}
+.home-icon{box-shadow:0 7px 18px rgba(0,0,0,.22)!important}
+.quality-section{background:#090d0f!important;color:#fff!important;border:0!important;padding:25px 0!important}
+.quality-heading{display:none!important}
+.quality-grid{gap:0!important}
+.quality-item{background:transparent!important;border:0!important;border-right:1px solid rgba(255,255,255,.15)!important;border-radius:0!important;box-shadow:none!important;min-height:84px!important;padding:12px 22px!important;color:#fff!important}
+.quality-item:last-child{border-right:0!important}
+.quality-icon{background:transparent!important;color:var(--gold2)!important;flex-basis:46px!important;width:46px!important;height:46px!important}
+.quality-icon svg{width:37px!important;height:37px!important;stroke-width:1.6!important}
+.quality-item b{color:var(--gold2)!important;text-transform:uppercase;font-size:12px!important;letter-spacing:.4px}
+.quality-item small{color:#fff!important;font-size:11.5px!important;line-height:1.35!important}
+
+@media(min-width:1181px){
+  .hero{min-height:calc(100vh - 82px)!important;padding-top:38px!important;padding-bottom:38px!important}
+  .hero-copy{position:static!important}
+}
+
+@media(max-width:1180px){
+  .hero:after{left:42%;width:58%;height:60%;opacity:.55}
+  .hero-grid{grid-template-columns:1fr!important}
+  .hero-copy{max-width:850px!important}
+}
+
+@media(max-width:700px){
+  .hero{
+    background:
+      linear-gradient(180deg,rgba(2,5,7,.74) 0%,rgba(2,5,7,.93) 58%,rgba(2,5,7,.98) 100%),
+      url('../assets/hero-bg-clean.jpg') 68% center/cover no-repeat!important;
+    padding:18px 0 26px!important;
+  }
+  .hero:after{left:auto;right:-34%;top:16px;bottom:auto;width:92%;height:310px;opacity:.48;background-size:contain;filter:brightness(.62) contrast(1.15) saturate(.7)}
+  .hero h1{font-size:clamp(30px,8.8vw,38px)!important;max-width:390px}
+  .hero-value{max-width:390px!important;font-size:13.6px!important;line-height:1.48!important;margin:10px 0 12px!important}
+  .hero-trust-strip{background:rgba(2,5,6,.82)!important;padding:10px 2px!important}
+  .trust-svg{width:25px!important;height:25px!important}
+  .trust-svg svg{width:24px;height:24px}
+  .hero-trust-strip b{font-size:8px!important}
+  .hero-search-panel{background:rgba(6,9,10,.9)!important;border-color:rgba(245,179,26,.44)!important}
+  .home-segment-heading{background:#fff;color:#111;margin:0 -4vw!important;padding:15px 4vw 8px!important}
+  .home-segment-heading span{color:#b47700!important}.home-segment-heading h2{color:#111!important;font-size:23px!important}
+  .hero-products{background:#fff;margin:0 -4vw -26px!important;padding:4px 4vw 24px!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+  .home-cat-card{display:flex!important;min-height:205px!important;height:auto!important;text-align:center!important;border-radius:10px!important;box-shadow:0 8px 18px rgba(0,0,0,.12)!important}
+  .home-cat-visual{height:82px!important;border-right:0!important;border-bottom:1px solid rgba(213,150,0,.28)!important}
+  .home-icon{width:32px!important;height:32px!important;top:66px!important;left:50%!important;transform:translateX(-50%)!important;border-width:3px!important}
+  .home-icon img{width:22px!important;height:22px!important}
+  .home-cat-body{padding:20px 6px 9px!important;text-align:center!important;justify-content:flex-start!important}
+  .home-cat-body h3{font-size:11px!important;min-height:26px!important;margin-bottom:5px!important}
+  .home-cat-body p,.home-cat-body ul{font-size:8.8px!important;line-height:1.3!important;min-height:55px!important;margin-bottom:6px!important;text-align:left!important}
+  .home-cat-body li{padding-left:7px;margin-bottom:2px}
+  .home-card-link{font-size:8px!important;margin-top:auto}
+  .card-arrow{font-size:12px!important;right:6px!important;bottom:5px!important}
+  .quality-section{padding:18px 0!important}
+  .quality-grid{grid-template-columns:repeat(4,1fr)!important}
+  .quality-item{min-height:90px!important;padding:7px 5px!important;gap:4px!important;border-right:1px solid rgba(255,255,255,.14)!important;align-items:center!important}
+  .quality-icon{width:30px!important;height:30px!important;flex-basis:30px!important}
+  .quality-icon svg{width:25px!important;height:25px!important}
+  .quality-item b{font-size:8px!important;text-align:center}
+  .quality-item small{display:none!important}
+}
+
+@media(max-width:360px){
+  .hero-products{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .home-cat-card{min-height:190px!important}
+  .home-cat-body p,.home-cat-body ul{font-size:9.5px!important}
+}
+
+
+/* ==========================================================
+   BCSPL Website V1.1 UX — Sprint 2 RC4 refinements
+   Full-width mobile products, premium CTAs, icon search,
+   5 desktop segments / up to 6 mobile segments
+   ========================================================== */
+
+/* Premium gold treatment for primary calls to action */
+.btn-gold,
+.hero-search-row #homeSearchBtn{
+  background:linear-gradient(135deg,#b97800 0%,#d99800 42%,#f5c451 100%)!important;
+  border-color:#e2a313!important;
+  color:#fff!important;
+  box-shadow:0 10px 24px rgba(190,126,0,.28),inset 0 1px 0 rgba(255,255,255,.28)!important;
+  text-shadow:0 1px 1px rgba(80,45,0,.28);
+}
+.btn-gold:hover,
+.hero-search-row #homeSearchBtn:hover{
+  background:linear-gradient(135deg,#a96c00 0%,#cf8c00 45%,#efbc43 100%)!important;
+  transform:translateY(-1px);
+  box-shadow:0 13px 28px rgba(190,126,0,.34),inset 0 1px 0 rgba(255,255,255,.3)!important;
+}
+.hero-actions .btn-outline{
+  background:linear-gradient(180deg,rgba(16,18,19,.88),rgba(2,4,5,.96))!important;
+  color:#fff!important;
+  border-color:#d99b10!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 10px 22px rgba(0,0,0,.2);
+}
+.hero-actions .btn-outline:hover{border-color:#f5c451!important;color:#f5c451!important}
+
+/* Search icon button */
+.search-icon-btn{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;min-width:56px}
+.search-icon-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+
+/* Desktop retains a maximum of five visible segment cards. */
+@media(min-width:701px){
+  .hero-products .home-cat-card:nth-child(n+6){display:none!important}
+}
+
+@media(max-width:700px){
+  /* Make the complete product section truly edge-to-edge, avoiding the
+     narrow white panel and black strip visible at the right side. */
+  .home-segment-heading,
+  .hero-products{
+    position:relative!important;
+    left:50%!important;
+    width:100vw!important;
+    max-width:none!important;
+    transform:translateX(-50%)!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+  .home-segment-heading{
+    background:linear-gradient(180deg,#fff 0%,#fffaf0 100%)!important;
+    padding:17px max(18px,4vw) 10px!important;
+    border-top:1px solid rgba(213,150,0,.2);
+  }
+  .hero-products{
+    background:linear-gradient(180deg,#fffaf0 0%,#fff 38%,#fffaf4 100%)!important;
+    padding:8px max(18px,4vw) 28px!important;
+    margin-bottom:-26px!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:10px!important;
+  }
+  .hero-products .home-cat-card:nth-child(n+7){display:none!important}
+  .home-cat-card{border-color:#d99b10!important;box-shadow:0 10px 23px rgba(38,25,0,.12)!important}
+  .home-cat-body{background:linear-gradient(180deg,#fff 0%,#fffdf8 100%)!important}
+  .home-card-link{color:#a96c00!important;font-weight:950!important}
+  .search-btn-text{display:none!important}
+  .hero-search-row #homeSearchBtn{width:48px!important;min-width:48px!important;padding:0!important;border-radius:10px!important}
+  .hero-search-row #homeSearchClear{display:none!important}
+  .hero-search-row{grid-template-columns:minmax(0,1fr) 48px!important;gap:8px!important}
+}
+
+@media(max-width:379px){
+  .hero-products{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC6 controlled homepage release
+   ========================================================= */
+.hero.hero-v11{
+  min-height:650px;
+  padding:54px 0 0;
+  background:
+    linear-gradient(90deg,rgba(2,5,7,.95) 0%,rgba(2,5,7,.82) 45%,rgba(2,5,7,.48) 100%),
+    url('../assets/hero-coil-clean.jpg') center right/cover no-repeat;
+}
+.hero.hero-v11:before{display:none}
+.hero-v11-inner{position:relative;z-index:1}
+.hero-v11-copy{max-width:920px}
+.hero-headline{font-size:clamp(52px,5.2vw,82px)!important;line-height:.94!important;text-transform:none!important;max-width:720px;margin-bottom:18px!important}
+.hero-headline>span,.hero-headline>em{display:block}
+.hero-headline>span{color:var(--gold2)!important}
+.hero-brandline{font-family:Georgia,'Times New Roman',serif;font-size:clamp(21px,2vw,30px);font-weight:800;line-height:1.25;margin:8px 0 0}
+.hero-brandline strong{color:var(--gold2)}
+.hero-value{max-width:700px!important;font-size:16px!important;line-height:1.55!important;margin:12px 0 18px!important;font-weight:650!important}
+.hero-value-mobile{display:none}
+.hero-search-inline{width:min(900px,100%);margin:20px 0 16px;background:rgba(3,7,8,.78);border:1px solid rgba(213,150,0,.7);border-radius:16px;padding:18px 20px;box-shadow:0 18px 42px rgba(0,0,0,.32);backdrop-filter:blur(8px)}
+.hero-search-kicker{color:var(--gold2);text-transform:uppercase;font-weight:950;letter-spacing:.9px;font-size:13px;margin-bottom:10px}
+.hero-search-row{height:58px;display:grid;grid-template-columns:48px minmax(0,1fr) 58px auto;align-items:center;background:#fff;border:1px solid #d8a21a;border-radius:12px;overflow:hidden;position:relative}
+.hero-search-row input{height:100%;min-width:0;border:0!important;outline:0;padding:0 10px!important;font-size:15px;background:#fff;color:#222}
+.search-leading-icon{height:100%;display:grid;place-items:center;color:#c88700;background:#fff}
+.search-leading-icon svg,.search-icon-btn svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.search-icon-btn{height:100%;width:58px;border:0!important;border-radius:0!important;background:linear-gradient(135deg,#c98200,#f4b51d)!important;color:#fff!important;display:grid!important;place-items:center;padding:0!important;box-shadow:none!important}
+.search-clear-inline{height:100%;border:0;background:#fff;color:#8a6000;font-size:25px;font-weight:400;padding:0 16px;cursor:pointer}
+.hero-search-row input:placeholder-shown~.search-clear-inline{display:none}
+.hero-search-label{margin:13px 0 8px;text-transform:uppercase;font-size:11px;font-weight:950;color:#fff}
+.hero-search-chips{display:flex!important;flex-wrap:wrap;gap:8px!important}
+.hero-search-chips button{border:1px solid rgba(213,150,0,.75)!important;background:rgba(0,0,0,.42)!important;color:#fff!important;border-radius:999px!important;padding:8px 13px!important;font-size:12px!important;font-weight:850!important}
+.hero-actions-left{display:flex;gap:14px;margin:12px 0 20px}
+.hero-btn{min-width:260px;min-height:56px;font-size:15px;text-transform:uppercase;letter-spacing:.2px}
+.hero-actions-left .btn-outline{background:rgba(3,7,8,.7)!important;color:#fff!important;border-color:var(--gold2)!important}
+.hero-trust-strip{width:100vw;margin-left:calc(50% - 50vw);padding:17px max(4vw,calc((100vw - 1240px)/2));display:grid!important;grid-template-columns:repeat(4,1fr);gap:0;background:rgba(3,7,8,.9);border-top:1px solid rgba(213,150,0,.6);margin-top:25px}
+.hero-trust-strip>div{display:grid!important;grid-template-columns:46px 1fr;grid-template-rows:auto auto;align-items:center;text-align:left!important;padding:5px 25px;border-right:1px solid rgba(255,255,255,.18)}
+.hero-trust-strip>div:last-child{border-right:0}
+.hero-trust-strip .trust-svg{grid-row:1/3;width:34px;height:34px;margin:0!important;color:var(--gold2)}
+.hero-trust-strip b{font-size:13px;line-height:1.2;text-transform:uppercase}
+.hero-trust-strip small{display:block;color:#d9d9d9;font-size:11px;line-height:1.2;margin-top:4px}
+
+.home-segments-v11{padding:38px 0 42px;background:linear-gradient(180deg,#fff,#fff9ef)}
+.home-segments-v11 .home-segment-heading{text-align:center;margin-bottom:20px}
+.home-segments-v11 .home-segment-heading span{color:#b97800;text-transform:uppercase;font-weight:950;letter-spacing:1px;font-size:12px}
+.home-segments-v11 .home-segment-heading h2{font-size:36px;margin:5px 0 0}
+.segment-carousel-shell{position:relative;padding:0 34px}
+.segment-carousel{display:flex!important;gap:16px!important;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:5px 2px 22px}
+.segment-carousel::-webkit-scrollbar{display:none}
+.segment-carousel .home-cat-card{flex:0 0 calc((100% - 80px)/6);min-width:175px;scroll-snap-align:start;box-shadow:0 12px 26px rgba(0,0,0,.1);min-height:315px}
+.segment-carousel .home-cat-visual{height:145px}
+.segment-carousel .home-cat-body p{text-align:left;font-size:12px;min-height:72px}
+.segment-carousel .home-cat-body p:before{content:'• ';color:var(--gold);font-weight:900}
+.segment-arrow{position:absolute;top:47%;transform:translateY(-50%);z-index:3;width:42px;height:42px;border-radius:50%;border:1px solid #d59600;background:#fff;color:#b87800;font-size:32px;line-height:1;box-shadow:0 8px 24px rgba(0,0,0,.15);cursor:pointer}
+.segment-arrow:disabled{opacity:.25;cursor:default}
+.segment-prev{left:-10px}.segment-next{right:-10px}
+.view-all-segments{display:none}
+
+@media(max-width:900px){
+  .hero.hero-v11{min-height:auto;padding:28px 0 0;background-position:63% center}
+  .hero-v11-copy{max-width:none}
+  .hero-headline{font-size:clamp(42px,11vw,58px)!important;line-height:.96!important}
+  .hero-brandline{font-size:20px}
+  .hero-value-desktop{display:none}
+  .hero-value-mobile{display:block;font-size:15px!important;line-height:1.45!important;margin:10px 0 14px!important}
+  .hero-search-inline{margin:14px 0;padding:14px;border-radius:14px}
+  .hero-search-row{height:54px;grid-template-columns:42px minmax(0,1fr) 54px auto}
+  .hero-search-row input{font-size:13px!important;padding:0 5px!important}
+  .search-leading-icon svg,.search-icon-btn svg{width:21px;height:21px}
+  .search-clear-inline{padding:0 10px;font-size:22px}
+  .hero-search-chips button{font-size:11px!important;padding:7px 10px!important}
+  .hero-actions-left{display:grid;grid-template-columns:1fr;gap:10px}
+  .hero-btn{width:100%;min-width:0;min-height:54px}
+  .hero-trust-strip{grid-template-columns:repeat(4,1fr);padding:13px 8px;margin-top:18px}
+  .hero-trust-strip>div{display:flex!important;flex-direction:column;text-align:center!important;padding:4px 6px;border-right:1px solid rgba(255,255,255,.15)}
+  .hero-trust-strip .trust-svg{width:27px;height:27px;margin:0 0 6px!important}
+  .hero-trust-strip b{font-size:9px}
+  .hero-trust-strip small{display:none}
+  .home-segments-v11{padding:30px 0 90px}
+  .home-segments-v11 .home-segment-heading h2{font-size:31px}
+  .segment-carousel-shell{padding:0}
+  .segment-arrow{display:none}
+  .segment-carousel{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));overflow:visible;gap:12px!important;padding:0}
+  .segment-carousel .home-cat-card{min-width:0;min-height:330px}
+  .segment-carousel .home-cat-visual{height:145px}
+  .segment-carousel .home-cat-body{padding:17px 12px 15px}
+  .segment-carousel .home-cat-body h3{font-size:17px}
+  .segment-carousel .home-cat-body p{font-size:11px;min-height:68px}
+  .view-all-segments{display:flex;justify-content:center;align-items:center;margin:18px auto 0;min-height:48px;border:1px solid #d59600;border-radius:10px;color:#a66c00;font-weight:900;text-transform:uppercase}
+}
+
+@media(max-width:420px){
+  .hero-headline{font-size:40px!important}
+  .hero-brandline{font-size:18px}
+  .hero-search-row{grid-template-columns:38px minmax(0,1fr) 50px auto}
+  .hero-search-row input{font-size:12.5px!important}
+  .segment-carousel .home-cat-card{min-height:312px}
+  .segment-carousel .home-cat-visual{height:132px}
+}
+
+/* Mobile expanded prices: remove horizontal page overflow and stack full rows */
+@media(max-width:700px){
+  html,body{max-width:100%;overflow-x:hidden}
+  .enquiry-full,.enquiry-full .container,.rate-grid,.approved-rate-card,.rate-card-v2{min-width:0!important;max-width:100%!important}
+  .compact-enquiry-table-wrap{overflow:visible!important;max-width:100%!important}
+  .full-rate-table{min-width:0!important;width:100%!important;border-collapse:separate!important;border-spacing:0 9px!important;background:transparent!important}
+  .full-rate-table thead{display:none!important}
+  .full-rate-table tbody,.full-rate-table tr,.full-rate-table td{display:block!important;width:100%!important}
+  .full-rate-table tr{border:1px solid #ead9b8!important;border-radius:10px!important;background:#fffaf0!important;padding:8px 10px!important;margin:0 0 9px!important;overflow:hidden}
+  .full-rate-table td{height:auto!important;min-height:0!important;border:0!important;padding:5px 4px 5px 42%!important;position:relative!important;white-space:normal!important;overflow-wrap:anywhere!important}
+  .full-rate-table td:before{position:absolute;left:4px;top:5px;width:38%;color:#8b6500;font-size:10px;font-weight:900;text-transform:uppercase}
+  .full-rate-table td:nth-child(1):before{content:'Grade'}
+  .full-rate-table td:nth-child(2):before{content:'Specification'}
+  .full-rate-table td:nth-child(3):before{content:'Size'}
+  .full-rate-table td:nth-child(4):before{content:'Rate'}
+  .full-rate-table td:nth-child(5):before{content:'Validity'}
+  .rate-remarks-row td{padding:7px!important;background:transparent!important}
+  .rate-remarks-row td:before{display:none!important}
+  .approved-create-enquiry,.enqPick{width:calc(100% - 26px)!important;margin-left:13px!important;margin-right:13px!important}
+}
+
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7 final visual refinement
+   ========================================================= */
+.hero.hero-v11{
+  min-height:720px!important;
+  padding:46px 0 0!important;
+  background:
+    linear-gradient(90deg,rgba(2,5,7,.96) 0%,rgba(2,5,7,.88) 34%,rgba(2,5,7,.30) 66%,rgba(2,5,7,.10) 100%),
+    url('../assets/hero-coils-rc7.jpg') 62% center/cover no-repeat!important;
+}
+.hero-v11-copy{max-width:1180px!important}
+.hero-headline{max-width:620px!important;font-size:clamp(48px,4.45vw,72px)!important;line-height:.98!important;margin-bottom:12px!important}
+.hero-headline>span{display:inline!important;color:var(--gold2)!important}
+.hero-headline>em{display:block!important;color:#fff!important;font-style:normal!important}
+.hero-brandline{max-width:660px!important;font-size:clamp(20px,1.8vw,28px)!important;margin-top:6px!important}
+.hero-value{max-width:620px!important;margin:12px 0 18px!important}
+.hero-search-inline{width:min(920px,78vw)!important;margin:18px 0 14px!important;padding:16px 18px!important;background:rgba(3,7,8,.72)!important;backdrop-filter:blur(10px)!important;box-shadow:0 20px 50px rgba(0,0,0,.38)!important}
+.hero-search-row{height:60px!important}
+.hero-actions-left{margin:10px 0 18px!important}
+.hero-trust-strip{margin-top:18px!important}
+
+/* About artwork: full, balanced left and right petals */
+.about-final{grid-template-columns:minmax(0,1.1fr) minmax(460px,.9fr)!important;gap:46px!important;align-items:center!important}
+.leaf-visual-wrap{min-height:470px!important;padding:0!important;justify-content:center!important}
+.leaf-visual{width:min(100%,610px)!important;max-height:500px!important;object-fit:contain!important;filter:drop-shadow(0 22px 30px rgba(0,0,0,.14))!important}
+
+/* Contact: one alignment line and intentional closing CTA */
+.contact-head.contact-head-rc7{display:block!important;max-width:980px!important;margin:0 0 24px!important}
+.contact-head.contact-head-rc7 span{display:block!important;margin-bottom:9px!important}
+.contact-head.contact-head-rc7 h2{font-size:32px!important;line-height:1.08!important;max-width:820px!important;margin:0 0 11px!important}
+.contact-head.contact-head-rc7 p{max-width:760px!important;margin:0!important}
+.contact-cta-strip{margin-top:20px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 20px;border:1px solid rgba(213,150,0,.42);border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.025));box-shadow:0 18px 36px rgba(0,0,0,.20)}
+.contact-cta-strip>div{display:grid;gap:5px}.contact-cta-strip b{font-size:18px}.contact-cta-strip span{color:#d5d5d5;font-size:14px}.contact-cta-strip .btn{min-width:220px;justify-content:center}
+
+@media(max-width:1100px){
+  .hero.hero-v11{background-position:68% center!important}
+  .hero-search-inline{width:min(860px,88vw)!important}
+  .about-final{grid-template-columns:1fr!important}
+  .leaf-visual-wrap{min-height:auto!important}
+}
+@media(max-width:900px){
+  .hero.hero-v11{min-height:auto!important;padding:28px 0 0!important;background-position:70% center!important;background-size:auto 100%!important}
+  .hero-headline{font-size:clamp(39px,10.5vw,54px)!important;max-width:100%!important}
+  .hero-headline>span{display:inline!important}
+  .hero-headline>em{display:block!important}
+  .hero-search-inline{width:100%!important;margin:14px 0!important}
+  .hero-search-row{height:54px!important}
+  .leaf-visual{max-width:560px!important;width:96%!important}
+  .contact-cta-strip{display:grid!important}.contact-cta-strip .btn{width:100%!important;min-width:0!important}
+}
+@media(max-width:620px){
+  .hero.hero-v11{background-position:72% center!important}
+  .hero-headline{font-size:39px!important}
+  .contact-head.contact-head-rc7 h2{font-size:27px!important}
+  .contact-cta-strip{padding:16px!important}
+}
+
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.1 production polish
+   Homepage-only visual corrections based on approved mock
+   ========================================================= */
+@media (min-width: 901px){
+  .hero.hero-v11{
+    min-height:640px!important;
+    padding:42px 0 0!important;
+    background-color:#05090b!important;
+    background-image:
+      linear-gradient(90deg,rgba(2,5,7,.98) 0%,rgba(2,5,7,.92) 27%,rgba(2,5,7,.58) 49%,rgba(2,5,7,.18) 72%,rgba(2,5,7,.05) 100%),
+      url('../assets/hero-coils-rc7.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-position:center, right 44%!important;
+    background-size:100% 100%, auto 91%!important;
+  }
+  .hero-v11-copy{max-width:1260px!important}
+  .hero-headline{font-size:clamp(46px,4.1vw,66px)!important;max-width:610px!important;line-height:.98!important}
+  .hero-brandline{font-size:clamp(19px,1.6vw,26px)!important}
+  .hero-value{max-width:590px!important;font-size:15px!important;line-height:1.5!important}
+  .hero-search-inline{width:min(980px,72vw)!important;margin-top:14px!important;margin-bottom:12px!important;padding:14px 16px!important}
+  .hero-search-row{height:56px!important}
+  .hero-actions-left{margin:8px 0 14px!important}
+  .hero-btn{min-height:52px!important;min-width:250px!important}
+  .hero-trust-strip{margin-top:14px!important;padding-top:14px!important;padding-bottom:14px!important}
+  .home-segments-v11{padding-top:30px!important;padding-bottom:34px!important}
+  .home-segments-v11 .home-segment-heading{margin-bottom:14px!important}
+  .home-segments-v11 .home-segment-heading span{font-size:13px!important;color:#c27e00!important;letter-spacing:1.2px!important}
+  .home-segments-v11 .home-segment-heading h2{font-size:34px!important;margin-top:3px!important}
+  .segment-carousel{gap:12px!important;padding-bottom:14px!important}
+  .segment-carousel .home-cat-card{flex-basis:calc((100% - 60px)/6)!important;box-shadow:0 9px 22px rgba(0,0,0,.10)!important}
+  .segment-prev{left:2px!important}.segment-next{right:2px!important}
+}
+
+@media (max-width:900px){
+  .hero.hero-v11{
+    padding:24px 0 0!important;
+    background-color:#040809!important;
+    background-image:
+      linear-gradient(90deg,rgba(2,5,7,.96) 0%,rgba(2,5,7,.84) 48%,rgba(2,5,7,.38) 100%),
+      url('../assets/hero-coils-rc7.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-size:auto 58%, auto 58%!important;
+    background-position:center top, 78% 8%!important;
+  }
+  .hero-headline{font-size:clamp(36px,9.8vw,48px)!important;line-height:.98!important;margin-bottom:12px!important}
+  .hero-brandline{font-size:18px!important;line-height:1.2!important}
+  .hero-value-mobile{font-size:14px!important;line-height:1.42!important;margin-bottom:12px!important}
+  .hero-search-inline{padding:12px!important;margin:10px 0 12px!important;border-radius:13px!important}
+  .hero-search-kicker{font-size:11px!important;margin-bottom:8px!important}
+  .hero-search-row{
+    display:grid!important;
+    grid-template-columns:38px minmax(0,1fr) 50px!important;
+    height:50px!important;
+    gap:0!important;
+    border-radius:11px!important;
+  }
+  .hero-search-row input{font-size:12.5px!important;padding:0 7px!important;line-height:50px!important;height:50px!important}
+  .search-leading-icon{height:50px!important}
+  .search-leading-icon svg,.search-icon-btn svg{width:20px!important;height:20px!important}
+  .hero-search-row #homeSearchBtn{width:50px!important;min-width:50px!important;height:50px!important;border-radius:0!important}
+  .hero-search-row #homeSearchClear{display:none!important}
+  .hero-search-label{margin:11px 0 7px!important}
+  .hero-search-chips{gap:7px!important}
+  .hero-search-chips button{font-size:10.5px!important;padding:7px 10px!important}
+  .hero-actions-left{gap:9px!important;margin:10px 0 12px!important;overflow:hidden!important}
+  .hero-btn{width:100%!important;max-width:100%!important;min-height:50px!important;padding:11px 14px!important;font-size:14px!important;white-space:nowrap!important}
+  .hero-trust-strip{margin-top:12px!important;padding:12px 5px!important}
+  .hero-trust-strip>div{min-width:0!important;padding:4px 3px!important}
+  .hero-trust-strip b{font-size:8.5px!important;overflow-wrap:anywhere!important}
+  .home-segments-v11{padding:24px 0 28px!important}
+  .home-segments-v11 .home-segment-heading{margin-bottom:14px!important}
+  .home-segments-v11 .home-segment-heading span{font-size:11px!important;color:#bd7800!important}
+  .home-segments-v11 .home-segment-heading h2{font-size:28px!important;margin-top:3px!important}
+  .view-all-segments{width:100%!important;margin:14px 0 0!important;min-height:46px!important;padding:10px 12px!important;text-align:center!important;border-radius:10px!important}
+  .quality-section{padding-top:18px!important;padding-bottom:22px!important;margin-top:0!important}
+  .quality-grid{margin-top:12px!important}
+  .about-section{padding-top:30px!important}
+  .stats-grid{display:grid!important;grid-template-columns:1fr!important;gap:0!important}
+  .stats .stat{padding:18px 20px!important;min-height:0!important;border-right:0!important;border-bottom:1px solid rgba(255,255,255,.28)!important}
+  .stats .stat:last-child{border-bottom:0!important}
+  .stats .stat b{font-size:32px!important;line-height:1!important;margin-bottom:4px!important}
+}
+
+@media(max-width:420px){
+  .hero.hero-v11{background-position:center top, 82% 7%!important;background-size:auto 52%, auto 52%!important}
+  .hero-headline{font-size:36px!important}
+  .hero-brandline{font-size:17px!important}
+  .hero-search-row{grid-template-columns:36px minmax(0,1fr) 48px!important;height:48px!important}
+  .hero-search-row input,.search-leading-icon,.hero-search-row #homeSearchBtn{height:48px!important}
+  .hero-search-row #homeSearchBtn{width:48px!important;min-width:48px!important}
+  .hero-btn{font-size:13.5px!important}
+  .view-all-segments{font-size:13px!important}
+}
+
+/* =========================================================
+   V1.1 UX Sprint 2 RC7.2 - Desktop homepage hero lock
+   Homepage-only refinement against approved RC7 mock.
+   ========================================================= */
+@media (min-width: 1100px){
+  .hero.hero-v11{
+    min-height: 690px!important;
+    padding: 28px 0 0!important;
+    background-color:#030607!important;
+    background-image:
+      linear-gradient(90deg,rgba(2,5,7,.99) 0%,rgba(2,5,7,.97) 25%,rgba(2,5,7,.78) 43%,rgba(2,5,7,.25) 64%,rgba(2,5,7,.12) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.22)),
+      url('../assets/hero-coils-rc7.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-position:left top,center,106% center!important;
+    background-size:100% 100%,100% 100%,78% auto!important;
+  }
+  .hero-v11-inner{width:min(1450px,92vw)!important}
+  .hero-v11-copy{max-width:1050px!important;padding-top:4px!important}
+  .hero-headline{
+    max-width:585px!important;
+    font-size:clamp(48px,4.2vw,68px)!important;
+    line-height:.95!important;
+    margin:0 0 10px!important;
+  }
+  .hero-headline>span{display:inline!important}
+  .hero-headline>em{display:block!important;max-width:560px}
+  .hero-brandline{font-size:clamp(21px,1.7vw,28px)!important;max-width:700px!important;margin:5px 0 0!important}
+  .markline{margin:12px 0 11px!important}
+  .hero-value{max-width:600px!important;font-size:15px!important;line-height:1.52!important;margin:8px 0 14px!important}
+  .hero-search-inline{
+    width:min(1000px,70vw)!important;
+    margin:14px 0 12px!important;
+    padding:14px 16px!important;
+    border-radius:13px!important;
+    background:rgba(4,8,9,.82)!important;
+    box-shadow:0 18px 46px rgba(0,0,0,.34)!important;
+  }
+  .hero-search-row{height:58px!important}
+  .hero-actions-left{margin:10px 0 14px!important;gap:18px!important}
+  .hero-btn{min-width:285px!important;min-height:55px!important}
+  .hero-trust-strip{
+    margin-top:13px!important;
+    padding-top:14px!important;
+    padding-bottom:14px!important;
+    background:rgba(3,7,8,.94)!important;
+  }
+  .home-segments-v11{padding-top:34px!important}
+  .home-segment-heading{margin-bottom:20px!important}
+  .home-segment-heading span{font-size:12px!important;letter-spacing:.9px!important;color:#b87900!important}
+  .home-segment-heading h2{font-size:34px!important;margin-top:5px!important;color:#161616!important}
+  .segment-carousel-shell{gap:12px!important}
+  .segment-carousel{gap:14px!important}
+  .segment-arrow{margin-top:0!important}
+}
+
+/* =========================================================
+   V1.1 UX Sprint 2 RC7.3 - Desktop hero image only
+   Uses a clean multi-coil warehouse composition.
+   No layout, typography, CTA, search, mobile, or page changes.
+   ========================================================= */
+@media (min-width: 901px){
+  .hero.hero-v11{
+    background-image:
+      linear-gradient(90deg,
+        rgba(2,5,7,.99) 0%,
+        rgba(2,5,7,.96) 24%,
+        rgba(2,5,7,.76) 42%,
+        rgba(2,5,7,.28) 63%,
+        rgba(2,5,7,.08) 100%),
+      url('../assets/hero-multi-coils-rc73.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-position:center center, center center!important;
+    background-size:100% 100%, cover!important;
+  }
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.4
+   Homepage hero image correction only
+   Removes the legacy secondary coil overlay (::after) that
+   caused two coil images to overlap in the desktop hero.
+   ========================================================= */
+.hero.hero-v11::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.5
+   Desktop homepage hero sizing/positioning correction only.
+   Keeps one image layer, prevents repeat/distortion, reduces
+   the visible coil scale, shifts the composition to the right,
+   and preserves safe top spacing for the full headline.
+   ========================================================= */
+@media (min-width: 1100px){
+  .hero.hero-v11{
+    min-height:690px!important;
+    padding-top:46px!important;
+    overflow:hidden!important;
+    background-color:#030607!important;
+    background-image:
+      linear-gradient(90deg,
+        rgba(2,5,7,.99) 0%,
+        rgba(2,5,7,.97) 27%,
+        rgba(2,5,7,.82) 44%,
+        rgba(2,5,7,.36) 65%,
+        rgba(2,5,7,.12) 100%),
+      url('../assets/hero-multi-coils-rc73.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-position:center center, 108% center!important;
+    background-size:100% 100%, 86% auto!important;
+  }
+  .hero-v11-copy{
+    padding-top:0!important;
+  }
+}
+
+@media (min-width:901px) and (max-width:1099px){
+  .hero.hero-v11{
+    overflow:hidden!important;
+    background-repeat:no-repeat!important;
+    background-position:center center, 112% center!important;
+    background-size:100% 100%, 92% auto!important;
+  }
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.6
+   Desktop hero image composition + trust strip alignment only.
+   - Uses one clean, neutral CR-coil warehouse image.
+   - Shows the full perspective line of approximately six coils.
+   - Keeps the largest coil on the far right and raises the row.
+   - Makes the four trust items a full-width, evenly aligned strip.
+   ========================================================= */
+@media (min-width:1100px){
+  .hero.hero-v11{
+    min-height:690px!important;
+    padding-top:46px!important;
+    overflow:hidden!important;
+    background-color:#030607!important;
+    background-image:
+      linear-gradient(90deg,
+        rgba(2,5,7,.995) 0%,
+        rgba(2,5,7,.975) 26%,
+        rgba(2,5,7,.83) 43%,
+        rgba(2,5,7,.42) 62%,
+        rgba(2,5,7,.14) 100%),
+      url('../assets/hero-multi-coils-cr-rc76.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-size:100% 100%, 84% auto!important;
+    background-position:center center, 106% 18%!important;
+  }
+  .hero-trust-strip{
+    width:100vw!important;
+    max-width:none!important;
+    margin-left:calc(50% - 50vw)!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    padding:15px max(4vw,calc((100vw - 1450px)/2))!important;
+    border-radius:0!important;
+    border-left:0!important;
+    border-right:0!important;
+    background:rgba(3,7,8,.96)!important;
+  }
+  .hero-trust-strip>div{
+    min-width:0!important;
+    padding:4px 28px!important;
+    display:grid!important;
+    grid-template-columns:46px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    align-items:center!important;
+  }
+  .hero-trust-strip>div:first-child{padding-left:8px!important}
+  .hero-trust-strip>div:last-child{padding-right:8px!important}
+  .hero-trust-strip b,.hero-trust-strip small{white-space:normal!important}
+}
+
+@media (min-width:901px) and (max-width:1099px){
+  .hero.hero-v11{
+    background-image:
+      linear-gradient(90deg,rgba(2,5,7,.99) 0%,rgba(2,5,7,.92) 44%,rgba(2,5,7,.30) 100%),
+      url('../assets/hero-multi-coils-cr-rc76.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-size:100% 100%, 91% auto!important;
+    background-position:center center, 109% 20%!important;
+  }
+  .hero-trust-strip{max-width:none!important;width:100vw!important;margin-left:calc(50% - 50vw)!important}
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.6
+   Desktop homepage only:
+   - Six clean CR-coil perspective hero composition
+   - Large foreground coil begins near the search-panel end
+   - Correctly aligned four-column trust strip
+   ========================================================= */
+@media (min-width: 1100px){
+  .hero.hero-v11{
+    background-image:
+      linear-gradient(90deg,
+        rgba(2,5,7,.995) 0%,
+        rgba(2,5,7,.98) 27%,
+        rgba(2,5,7,.84) 43%,
+        rgba(2,5,7,.42) 61%,
+        rgba(2,5,7,.14) 100%),
+      url('../assets/hero-cr-coils-rc76.jpg')!important;
+    background-repeat:no-repeat!important;
+    background-position:center center, 100% center!important;
+    background-size:100% 100%, 72% auto!important;
+    overflow:hidden!important;
+  }
+
+  .hero-trust-strip{
+    width:min(1450px,92vw)!important;
+    max-width:none!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    margin-top:16px!important;
+    padding:0!important;
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    gap:0!important;
+    border:1px solid rgba(213,150,0,.52)!important;
+    border-radius:14px!important;
+    overflow:hidden!important;
+    background:rgba(3,7,8,.94)!important;
+  }
+
+  .hero-trust-strip>div{
+    min-height:92px!important;
+    display:grid!important;
+    grid-template-columns:52px minmax(0,1fr)!important;
+    grid-template-rows:auto auto!important;
+    column-gap:13px!important;
+    align-content:center!important;
+    align-items:center!important;
+    text-align:left!important;
+    padding:15px 20px!important;
+    border-right:1px solid rgba(255,255,255,.16)!important;
+  }
+
+  .hero-trust-strip>div:last-child{border-right:0!important;}
+  .hero-trust-strip .trust-svg{
+    grid-column:1!important;
+    grid-row:1/3!important;
+    width:38px!important;
+    height:38px!important;
+    margin:0!important;
+  }
+  .hero-trust-strip .trust-svg svg{width:34px!important;height:34px!important;}
+  .hero-trust-strip b{
+    grid-column:2!important;
+    grid-row:1!important;
+    font-size:13px!important;
+    line-height:1.18!important;
+    margin:0!important;
+  }
+  .hero-trust-strip small{
+    grid-column:2!important;
+    grid-row:2!important;
+    font-size:11px!important;
+    line-height:1.25!important;
+    margin:4px 0 0!important;
+    color:#d8d8d8!important;
+  }
+}
+
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.7
+   Desktop homepage hero image-layer correction only.
+   - Uses one dedicated image element instead of CSS cover.
+   - Keeps the six-coil perspective visible above the search.
+   - Preserves pallet/floor detail below the search panel.
+   - Prevents crop, repeat, stretch and duplicate-image issues.
+   ========================================================= */
+.hero-scene-desktop,
+.hero-scene-overlay{display:none;}
+
+@media (min-width:1100px){
+  .hero.hero-v11{
+    position:relative!important;
+    isolation:isolate!important;
+    min-height:690px!important;
+    padding-top:46px!important;
+    overflow:hidden!important;
+    background:#030607!important;
+    background-image:none!important;
+  }
+
+  .hero-scene-desktop{
+    display:block!important;
+    position:absolute!important;
+    z-index:0!important;
+    top:92px!important;
+    right:-1.5vw!important;
+    width:79vw!important;
+    height:auto!important;
+    max-width:none!important;
+    object-fit:contain!important;
+    object-position:right top!important;
+    pointer-events:none!important;
+    user-select:none!important;
+  }
+
+  .hero-scene-overlay{
+    display:block!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:0!important;
+    pointer-events:none!important;
+    background:
+      linear-gradient(90deg,
+        #030607 0%,
+        rgba(3,6,7,.995) 24%,
+        rgba(3,6,7,.94) 34%,
+        rgba(3,6,7,.68) 45%,
+        rgba(3,6,7,.30) 57%,
+        rgba(3,6,7,.08) 76%,
+        rgba(3,6,7,0) 100%),
+      linear-gradient(180deg,
+        rgba(3,6,7,.10) 0%,
+        rgba(3,6,7,0) 62%,
+        rgba(3,6,7,.22) 100%)!important;
+  }
+
+  .hero-v11-inner{
+    position:relative!important;
+    z-index:2!important;
+  }
+}
+
+@media (min-width:1100px) and (max-width:1399px){
+  .hero-scene-desktop{
+    top:112px!important;
+    right:-4vw!important;
+    width:84vw!important;
+  }
+  .hero-scene-overlay{
+    background:
+      linear-gradient(90deg,
+        #030607 0%,
+        rgba(3,6,7,.995) 28%,
+        rgba(3,6,7,.90) 40%,
+        rgba(3,6,7,.52) 54%,
+        rgba(3,6,7,.12) 76%,
+        rgba(3,6,7,0) 100%),
+      linear-gradient(180deg,rgba(3,6,7,.10),rgba(3,6,7,.15))!important;
+  }
+}
+
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.8
+   Desktop homepage hero image positioning only.
+   - Pins the dedicated six-coil image to the hero top/right.
+   - Sizes by hero height instead of viewport width.
+   - Keeps the full perspective visible above the search panel.
+   - Preserves a single non-repeating, non-stretched image layer.
+   ========================================================= */
+@media (min-width:1100px){
+  .hero-scene-desktop{
+    top:0!important;
+    right:0!important;
+    width:auto!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:right center!important;
+    transform:scale(.92)!important;
+    transform-origin:right center!important;
+  }
+}

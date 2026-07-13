@@ -1,0 +1,30 @@
+BCSPL WEBSITE VERSION 1.1 UX
+SPRINT 1 - MOBILE NAVIGATION
+Release Candidate: RC1
+Date: 13 July 2026
+
+CHANGES INCLUDED
+1. Added a visible hamburger navigation button on screens up to 1180 px.
+2. Added a slide-in navigation panel containing Home, About Us, Prices & Enquiry, Products and Contact Us.
+3. Added a dark backdrop and tap-outside-to-close behaviour.
+4. Added Escape-key close behaviour and accessible aria-expanded states.
+5. Reduced the mobile header height to approximately 68 px.
+6. Retained the existing clickable logo link to the Home page on all public pages.
+7. Made Home in the Products and Enquiry breadcrumbs explicitly clickable.
+8. Retained active-page highlighting in the mobile navigation.
+9. No Supabase, database, admin-panel, product, pricing or enquiry logic was changed.
+
+FILES MODIFIED
+- index.html
+- products.html
+- enquiry.html
+- css/style.css
+- js/app.js
+
+TESTS REQUIRED BEFORE PRODUCTION
+- Open and close the menu on Android and iPhone widths.
+- Verify every menu link from Home, Products and Prices & Enquiry pages.
+- Verify logo returns to Home.
+- Verify breadcrumb Home link returns to Home.
+- Verify page scrolling is locked while the menu is open.
+- Verify desktop navigation remains unchanged above 1180 px.

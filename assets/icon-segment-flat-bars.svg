@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Flat steel bars">
+  <g fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 15h35l9 6H19Z"/>
+    <path d="M10 29h35l9 6H19Z"/>
+    <path d="M10 43h35l9 6H19Z"/>
+    <path d="M19 21v4h35v-4" opacity=".9"/>
+    <path d="M19 35v4h35v-4" opacity=".9"/>
+    <path d="M19 49v3h35v-3" opacity=".9"/>
+  </g>
+</svg>

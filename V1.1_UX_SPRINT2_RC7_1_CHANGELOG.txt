@@ -1,0 +1,14 @@
+BCSPL Website v1.1 UX Sprint 2 RC7.1
+
+Homepage polish changes:
+- Refined multi-coil hero composition and reduced overscaling.
+- Improved desktop hero balance and tightened vertical rhythm.
+- Corrected mobile hero image positioning.
+- Fixed mobile search field/icon alignment and reduced placeholder size.
+- Renamed secondary CTA to Price Enquiry.
+- Prevented mobile CTA overflow.
+- Tightened product section heading and card spacing.
+- Corrected View All Product Segments alignment.
+- Reduced gaps before quality and About sections.
+- Reduced mobile statistics strip height.
+- Preserved mobile expanded price-card behaviour.

@@ -1,0 +1,210 @@
+/* RC7.14 — canonical contact, mobile search/actions and even segment rule */
+
+/* Keep the Contact heading consistently left-aligned wherever the footer exists. */
+.contact-head-rc7,
+.contact-section .contact-head-rc7 {
+  max-width: 980px;
+  margin: 0 0 22px 0;
+  text-align: left;
+}
+.contact-head-rc7 h2 {
+  margin-left: 0;
+  text-align: left;
+}
+
+@media (max-width: 700px) {
+  html, body { overflow-x: hidden; }
+
+  /* Search panel remains fully inside the phone viewport. */
+  .hero-v11-copy .hero-search-inline {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 16px 12px 14px !important;
+    padding: 12px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .hero-search-row {
+    display: grid !important;
+    grid-template-columns: 44px minmax(0, 1fr) 56px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    gap: 0 !important;
+    align-items: stretch !important;
+    overflow: hidden !important;
+    border: 1px solid #d59600 !important;
+    border-radius: 12px !important;
+    background: #fff !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .search-leading-icon {
+    grid-column: 1 !important;
+    width: 44px !important;
+    min-width: 44px !important;
+    height: 56px !important;
+    display: grid !important;
+    place-items: center !important;
+    background: #fff !important;
+  }
+
+  .hero-v11-copy .hero-search-row input {
+    grid-column: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: 56px !important;
+    padding: 0 8px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    line-height: normal !important;
+    font-size: 13px !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .hero-search-row input::placeholder {
+    font-size: 13px !important;
+    color: #777 !important;
+    opacity: 1 !important;
+  }
+
+  .hero-v11-copy .hero-search-row #homeSearchBtn {
+    grid-column: 3 !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 56px !important;
+    min-width: 56px !important;
+    max-width: 56px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: linear-gradient(135deg, #d59600, #f5b31a) !important;
+    color: #fff !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .hero-v11-copy .hero-search-row #homeSearchBtn svg {
+    width: 23px !important;
+    height: 23px !important;
+  }
+
+  .hero-v11-copy .hero-search-row #homeSearchClear {
+    display: none !important;
+  }
+
+  /* Trust indicators use a balanced 2 x 2 layout, avoiding right-edge clipping. */
+  .hero-v11-copy .hero-trust-strip {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 12px 12px 14px !important;
+    padding: 10px !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip > div {
+    min-width: 0 !important;
+    min-height: 94px !important;
+    padding: 11px 7px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    text-align: center !important;
+    border: 1px solid rgba(213, 150, 0, .72) !important;
+    border-radius: 12px !important;
+    background: rgba(3, 7, 8, .88) !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip > div:nth-child(n) {
+    border-right: 1px solid rgba(213, 150, 0, .72) !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip .trust-svg {
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0 !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip b {
+    font-size: 9px !important;
+    line-height: 1.2 !important;
+    white-space: normal !important;
+  }
+
+  .hero-v11-copy .hero-trust-strip small {
+    display: none !important;
+  }
+
+  /* Both hero CTAs share identical safe margins and width. */
+  .hero-v11-copy .hero-actions-left {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 10px 12px 14px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-v11-copy .hero-actions-left .hero-btn {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 56px !important;
+    padding: 12px 18px !important;
+    margin: 0 !important;
+    justify-content: space-between !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Mobile-only even-number rule. The full set stays available on desktop. */
+  #featuredProducts.mobile-odd-segment-count .home-cat-card:last-child {
+    display: none !important;
+  }
+
+  #featuredProducts.segment-carousel {
+    align-items: stretch !important;
+  }
+
+  .view-all-segments {
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    margin: 14px 12px 20px !important;
+    box-sizing: border-box !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .hero-v11-copy .hero-search-row {
+    grid-template-columns: 40px minmax(0, 1fr) 52px !important;
+  }
+  .hero-v11-copy .search-leading-icon {
+    width: 40px !important;
+    min-width: 40px !important;
+  }
+  .hero-v11-copy .hero-search-row #homeSearchBtn {
+    width: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+  }
+  .hero-v11-copy .hero-search-row input,
+  .hero-v11-copy .hero-search-row input::placeholder {
+    font-size: 12px !important;
+  }
+}

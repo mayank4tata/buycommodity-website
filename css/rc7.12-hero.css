@@ -1,0 +1,84 @@
+/* =========================================================
+   BCSPL Website v1.1 UX - RC7.12
+   Desktop homepage hero only.
+   Built from the stable RC7.09 composition using the user-
+   approved multi-coil image. The complete image is contained
+   inside a fixed scene window so the coils appear smaller,
+   the pallets/floor remain visible, and no crop/repeat occurs.
+   ========================================================= */
+
+.hero-scene-window{display:none;}
+
+@media (min-width:1100px){
+  .hero.hero-v11{
+    position:relative!important;
+    isolation:isolate!important;
+    min-height:690px!important;
+    padding-top:46px!important;
+    overflow:hidden!important;
+    background:#030607!important;
+    background-image:none!important;
+  }
+
+  /* The visual starts after the text column and spans to the right edge. */
+  .hero-scene-window{
+    display:block!important;
+    position:absolute!important;
+    z-index:0!important;
+    top:0!important;
+    right:0!important;
+    bottom:0!important;
+    left:27%!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+    background:#030607!important;
+  }
+
+  /* Show the complete approved image without zooming or cropping. */
+  .hero-scene-window .hero-scene-desktop{
+    display:block!important;
+    position:absolute!important;
+    inset:0!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    object-fit:contain!important;
+    object-position:right center!important;
+    transform:none!important;
+    margin:0!important;
+    user-select:none!important;
+  }
+
+  /* Left readability gradient, deliberately light over the receding coils. */
+  .hero-scene-overlay{
+    display:block!important;
+    position:absolute!important;
+    z-index:1!important;
+    inset:0!important;
+    pointer-events:none!important;
+    background:
+      linear-gradient(90deg,
+        #030607 0%,
+        rgba(3,6,7,.99) 23%,
+        rgba(3,6,7,.87) 30%,
+        rgba(3,6,7,.58) 38%,
+        rgba(3,6,7,.24) 47%,
+        rgba(3,6,7,.06) 58%,
+        rgba(3,6,7,0) 70%),
+      linear-gradient(180deg,
+        rgba(3,6,7,.02) 0%,
+        rgba(3,6,7,0) 73%,
+        rgba(3,6,7,.12) 100%)!important;
+  }
+
+  .hero-v11-inner{
+    position:relative!important;
+    z-index:2!important;
+  }
+}
+
+/* Preserve the existing mobile hero exactly as in RC7.09. */
+@media (max-width:1099px){
+  .hero-scene-window{display:none!important;}
+}

@@ -1,0 +1,10 @@
+BCSPL Website V1.1 - UX Sprint 2 RC7.15
+
+Changes:
+1. Cross-page About/Contact anchors are realigned after async page content finishes loading.
+2. Added dedicated SVG homepage icons for Pig Iron, Scrap and Rounds.
+3. Reduced unused black space below the desktop trust strip and vertically balanced the strip.
+4. Shifted the desktop Product Range heading upward and increased the desktop kicker size only.
+5. On mobile, Explore Products and Price Enquiry now appear before the four trust tiles.
+
+No Supabase schema, admin, pricing, enquiry or hero-image changes.

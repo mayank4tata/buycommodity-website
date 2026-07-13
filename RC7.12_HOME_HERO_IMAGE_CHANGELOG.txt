@@ -1,0 +1,12 @@
+BCSPL Website v1.1 UX - Sprint 2 RC7.12
+
+Scope: Desktop homepage hero image only.
+
+Changes:
+- Returned to the stable RC7.09 hero structure and layout.
+- Replaced the hero asset with the user-approved multi-coil warehouse image.
+- Displayed the full image with object-fit: contain (no crop or zoom).
+- Reduced apparent coil size while retaining all receding coils.
+- Kept pallets, coil saddles, warehouse floor and floor markings visible.
+- Retained a single image layer with no repeat or pseudo-image overlay.
+- Preserved existing text, search, buttons, trust strip, mobile and all other pages.

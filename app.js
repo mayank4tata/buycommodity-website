@@ -61,7 +61,8 @@ const HOME_CATEGORIES=[
 {title:'Sheets / Plates',desc:'HR, CR and Stainless Steel Sheets / Plates',img:'enq-sheets-real.jpg',icon:'plates',link:'enquiry.html?product=Sheets'},
 {title:'Angles',desc:'MS angles in different thicknesses and sizes',img:'enq-angles-real.jpg',icon:'angle',link:'enquiry.html?product=Angles'},
 {title:'Channels & Beams',desc:'MS Channels, I Beams and H Beams for structural use',img:'enq-beams-real.jpg',icon:'channel',link:'enquiry.html?product=Beam'},
-{title:'Pipes',desc:'Round, Square and Rectangular Pipes',img:'enq-pipes-real.jpg',icon:'pipes',link:'enquiry.html?product=Pipes'}
+{title:'Pipes',desc:'Round, Square and Rectangular Pipes',img:'enq-pipes-real.jpg',icon:'pipes',link:'enquiry.html?product=Pipes'},
+{title:'Rounds & Flats',desc:'MS Rounds, Flats and Square Bars',img:'enq-rounds-real.jpg',icon:'pipes',link:'enquiry.html?product=Rounds'}
 ];
 
 const IMAGE_MIGRATION={
@@ -128,6 +129,13 @@ function productIcon(type){
 function renderHome(){
  let el=document.getElementById('featuredProducts'); if(!el)return;
  el.innerHTML=HOME_CATEGORIES.map(x=>`<a class="home-cat-card" data-product="${x.title}" href="${x.link}" title="Open ${x.title} details" aria-label="Open ${x.title} product details"><div class="home-cat-visual ${x.icon==='angle'?'home-angle-visual':''}"><img src="assets/products/${x.img}" alt="${x.title}" loading="eager"></div><span class="home-icon" aria-hidden="true">${productIcon(x.icon)}</span><div class="home-cat-body"><h3>${x.title}</h3><p>${x.desc}</p><span class="card-arrow">↗</span></div></a>`).join('');
+ const shell=el.closest('.segment-carousel-shell');
+ const prev=shell?.querySelector('.segment-prev'), next=shell?.querySelector('.segment-next');
+ const step=()=>Math.max(280,el.clientWidth*.82);
+ if(prev)prev.onclick=()=>el.scrollBy({left:-step(),behavior:'smooth'});
+ if(next)next.onclick=()=>el.scrollBy({left:step(),behavior:'smooth'});
+ const update=()=>{if(!prev||!next)return;prev.disabled=el.scrollLeft<8;next.disabled=el.scrollLeft+el.clientWidth>=el.scrollWidth-8;};
+ el.addEventListener('scroll',update,{passive:true}); window.addEventListener('resize',update); setTimeout(update,80);
 }
 
 function renderProducts(){

@@ -1,4 +1,4 @@
-﻿const DEFAULT_SETTINGS = {
+const DEFAULT_SETTINGS = {
     company_name: "Buy Commodity Solutions Private Limited",
     mobile_1: "+91 99101 56202",
     mobile_2: "+91 88514 24339",
@@ -52,7 +52,7 @@ const IMAGE_TYPE_CONFIG = [
     { key: "product_photo", label: "Product Photographs", tbodyId: "productPhotoRows" }
 ];
 
-const SEGMENTS_CACHE_KEY = "bcspl-public-segments-v4";
+const SEGMENTS_CACHE_KEY = "bcspl-public-segments-v5";
 const HOME_PRODUCTS_CACHE_KEY = "bcspl-public-home-products-v4";
 const CACHE_TTL_MS = 30 * 60 * 1000;
 
@@ -492,6 +492,19 @@ async function loadFullPublicData() {
     }
 }
 
+function resolveHomepageSegmentIcon(segmentName, databaseIconId) {
+    const name = String(segmentName || "").trim().toLowerCase();
+    if (name.includes("pig iron")) return "assets/icon-segment-pig-iron.svg";
+    if (name.includes("scrap")) return "assets/icon-segment-scrap.svg";
+    if ((name === "round" || name === "rounds" || name.includes("rounds &") || name.includes("& rounds")) && !name.includes("square")) {
+        return "assets/icon-segment-rounds.svg";
+    }
+    if (name.includes("flat") && !name.includes("round") && !name.includes("angle")) {
+        return "assets/icon-segment-flat-bars.svg";
+    }
+    return resolveImageUrl(databaseIconId);
+}
+
 function renderHomeSegments() {
     const container = document.getElementById("featuredProducts");
     if (!container) return;
@@ -510,17 +523,63 @@ function renderHomeSegments() {
     }
 
     const segments = [...state.public.segments]
+        .filter((segment) => segment.active !== false)
         .sort((a, b) =>
             Number(a.display_order || 0) - Number(b.display_order || 0)
             || String(a.segment_name || "").localeCompare(String(b.segment_name || ""))
             || String(a.segment_id || "").localeCompare(String(b.segment_id || ""))
-        )
-        .slice(0, 5);
+        );
+    container.classList.toggle("mobile-odd-segment-count", segments.length % 2 === 1);
+    container.dataset.segmentCount = String(segments.length);
     container.innerHTML = segments.map((segment, index) => {
         const photoUrl = resolveImageUrl(segment.segment_photo_image_id);
-        const iconUrl = resolveImageUrl(segment.segment_icon_image_id);
-        return `<a class="home-cat-card" data-product="${escapeHtml(segment.segment_name)}" href="products.html?segment_id=${encodeURIComponent(segment.segment_id)}" title="Open ${escapeHtml(segment.segment_name)} details" aria-label="Open ${escapeHtml(segment.segment_name)} product details"><div class="home-cat-visual">${photoUrl ? `<img src="${escapeHtml(photoUrl)}" alt="${escapeHtml(segment.segment_name)}" loading="${index === 0 ? "eager" : "lazy"}">` : ""}</div>${iconUrl ? `<span class="home-icon" aria-hidden="true"><img src="${escapeHtml(iconUrl)}" alt=""></span>` : ""}<div class="home-cat-body"><h3>${escapeHtml(segment.segment_name)}</h3><p>${escapeHtml(segment.description || "")}</p><span class="card-arrow">&#8599;</span></div></a>`;
+        const iconUrl = resolveHomepageSegmentIcon(segment.segment_name, segment.segment_icon_image_id);
+        const description = String(segment.description || "").trim();
+        const items = description.split(/\s*(?:\/|,|•|\||;|\band\b)\s*/i).map((item) => item.trim()).filter(Boolean).slice(0, 4);
+        const detailHtml = items.length > 1
+            ? `<ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul>`
+            : `<p>${escapeHtml(description)}</p>`;
+        return `<a class="home-cat-card" data-product="${escapeHtml(segment.segment_name)}" href="products.html?segment_id=${encodeURIComponent(segment.segment_id)}" title="Open ${escapeHtml(segment.segment_name)} details" aria-label="Open ${escapeHtml(segment.segment_name)} product details"><div class="home-cat-visual">${photoUrl ? `<img src="${escapeHtml(photoUrl)}" alt="${escapeHtml(segment.segment_name)}" loading="${index === 0 ? "eager" : "lazy"}">` : ""}</div>${iconUrl ? `<span class="home-icon" aria-hidden="true"><img src="${escapeHtml(iconUrl)}" alt=""></span>` : ""}<div class="home-cat-body"><h3>${escapeHtml(segment.segment_name)}</h3>${detailHtml}<span class="home-card-link">View Products</span><span class="card-arrow">&#8599;</span></div></a>`;
     }).join("");
+    bindSegmentCarousel();
+}
+
+function bindSegmentCarousel() {
+    const carousel = document.getElementById("featuredProducts");
+    if (!carousel) return;
+    const shell = carousel.closest(".segment-carousel-shell");
+    const previous = shell?.querySelector(".segment-prev");
+    const next = shell?.querySelector(".segment-next");
+    if (!shell || !previous || !next) return;
+
+    const updateButtons = () => {
+        const maxScroll = Math.max(0, carousel.scrollWidth - carousel.clientWidth);
+        previous.disabled = carousel.scrollLeft <= 2;
+        next.disabled = carousel.scrollLeft >= maxScroll - 2;
+        const hasOverflow = maxScroll > 4;
+        previous.hidden = !hasOverflow;
+        next.hidden = !hasOverflow;
+    };
+
+    const scrollDistance = () => {
+        const firstCard = carousel.querySelector(".home-cat-card");
+        if (!firstCard) return Math.max(280, carousel.clientWidth * 0.72);
+        const gap = Number.parseFloat(getComputedStyle(carousel).gap || "0") || 0;
+        return Math.max(firstCard.getBoundingClientRect().width + gap, carousel.clientWidth * 0.34);
+    };
+
+    previous.onclick = () => carousel.scrollBy({ left: -scrollDistance() * 2, behavior: "smooth" });
+    next.onclick = () => carousel.scrollBy({ left: scrollDistance() * 2, behavior: "smooth" });
+
+    if (carousel.dataset.carouselBound !== "true") {
+        carousel.dataset.carouselBound = "true";
+        carousel.addEventListener("scroll", updateButtons, { passive: true });
+        window.addEventListener("resize", updateButtons, { passive: true });
+    }
+
+    carousel.scrollLeft = 0;
+    requestAnimationFrame(updateButtons);
+    setTimeout(updateButtons, 150);
 }
 
 function renderHomeSearchChips() {
@@ -3026,6 +3085,18 @@ function bindAdmin() {
     }
 }
 
+function alignInitialHashTarget() {
+    const hash = String(window.location.hash || "").toLowerCase();
+    if (hash !== "#about" && hash !== "#contact") return;
+    const id = hash.slice(1);
+    const element = document.getElementById(id);
+    if (!element) return;
+    const header = document.querySelector(".topbar");
+    const headerHeight = header ? header.getBoundingClientRect().height : 76;
+    const top = Math.max(0, element.getBoundingClientRect().top + window.pageYOffset - headerHeight - 8);
+    window.scrollTo({ top, behavior: "auto" });
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     await renderBasics();
     renderProductsPage();
@@ -3047,7 +3118,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     bindAdmin();
     admin();
+
+    // Re-align cross-page #about / #contact after async catalogue and image layout settles.
+    alignInitialHashTarget();
+    window.setTimeout(alignInitialHashTarget, 180);
+    window.setTimeout(alignInitialHashTarget, 700);
 });
+
+window.addEventListener("load", alignInitialHashTarget);
 
 (function () {
     function setActiveNav(target) {
@@ -3098,3 +3176,34 @@ document.addEventListener("DOMContentLoaded", async () => {
     else setActiveNav("home");
 })();
 
+
+/* BCSPL Website v1.1 UX - Sprint 1: Mobile navigation */
+(function initMobileNavigation(){
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.topbar .menu');
+    const backdrop = document.querySelector('.menu-backdrop');
+    if (!toggle || !menu || !backdrop) return;
+
+    const setOpen = (open) => {
+        document.body.classList.toggle('menu-open', open);
+        toggle.setAttribute('aria-expanded', String(open));
+        toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+        backdrop.hidden = !open;
+        if (open) {
+            const current = menu.querySelector('a.active') || menu.querySelector('a');
+            window.setTimeout(() => current?.focus(), 80);
+        }
+    };
+
+    toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('menu-open')));
+    backdrop.addEventListener('click', () => setOpen(false));
+    menu.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+    });
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 1180) setOpen(false);
+    });
+})();

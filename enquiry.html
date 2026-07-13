@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Product Enquiry | Buy Commodity</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/rc7.14-fixes.css">
 </head>
 <body>
     <header class="topbar">
@@ -13,7 +14,8 @@
                 <img src="assets/header-logo-icon-v3.png" alt="Buy Commodity">
                 <div><b>BUY COMMODITY</b><span>Building Trust. Delivering Strength.</span></div>
             </a>
-            <nav class="menu">
+            <button class="menu-toggle" type="button" aria-label="Open navigation" aria-controls="primaryMenu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <nav class="menu" id="primaryMenu">
                 <a href="index.html">HOME</a>
                 <a href="index.html#about">ABOUT US</a>
                 <a class="active" href="enquiry.html">PRICES &amp; ENQUIRY</a>
@@ -23,8 +25,9 @@
             <a class="call" data-call>☎ <span data-phone></span></a>
         </div>
     </header>
+    <button class="menu-backdrop" type="button" aria-label="Close navigation" hidden></button>
 
-    <div class="crumb"><div class="container">⌂ Home › Enquiry</div></div>
+    <div class="crumb"><div class="container"><a href="index.html" aria-label="Return to Home">⌂ Home</a> <span aria-hidden="true">›</span> <span>Enquiry</span></div></div>
 
     <main class="section">
         <div class="container enquiry-layout enquiry-full">

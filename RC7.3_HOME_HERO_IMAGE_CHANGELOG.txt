@@ -1,0 +1,7 @@
+BCSPL Website V1.1 UX Sprint 2 RC7.3
+Scope: Desktop homepage hero image only
+
+Changes:
+- Replaced the single oversized-coil hero asset with a clean multi-coil warehouse image.
+- Kept the existing desktop hero layout, text, search panel, CTA buttons and trust strip unchanged.
+- Kept all mobile styling and all other pages unchanged.
