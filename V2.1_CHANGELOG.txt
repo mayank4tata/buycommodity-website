@@ -1,0 +1,12 @@
+BCSPL Website V2.1
+Release date: 14 July 2026
+
+Changes
+- Corrected homepage trust-strip/search alignment on tablets and open foldables.
+- Product segments: 6 visible cards with horizontal scrolling on desktop; 3 on tablets/open Fold; 2-column vertical grid on phones.
+- Standardised segment icon sizing and object-fit to prevent distortion and title overlap.
+- Corrected rate-table fixed column sizing and wrapping on iPad Mini, Galaxy Tab and open Fold displays.
+- Changed default Products per page from 9 to 10, with 10/20/30/40 choices.
+- Set mobile form controls/search input to at least 16px to prevent iPhone Safari focus zoom.
+- Replaced legacy homepage search-result tiles with compact cards matching the current Product Enquiry visual language.
+- Added page-level overflow safeguards without disabling intended carousel scrolling.

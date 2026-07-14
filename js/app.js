@@ -645,7 +645,10 @@ function renderSearchResults(query) {
         return;
     }
 
-    container.innerHTML = matches.map((item) => `<a class="search-product-tile" href="enquiry.html?product_id=${encodeURIComponent(item.productId)}&pricing_id=${encodeURIComponent(item.pricingId || "")}">${item.imageUrl ? `<div class="search-product-img"><img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.productName)}" loading="lazy"></div>` : ""}<div class="search-product-body"><h4>${escapeHtml(item.productName)}</h4><p>${escapeHtml([item.segmentName, item.categoryName].filter(Boolean).join(" | "))}</p><small>${escapeHtml([item.grade, item.specification, item.sizeThickness].filter(Boolean).join(" | "))}</small><small>${escapeHtml(item.rateText)}${item.validTill ? ` | Valid till: ${escapeHtml(item.validTill)}` : ""}</small><span>Enquire</span></div></a>`).join("");
+    container.innerHTML = matches.map((item) => {
+        const combinedSpec = [item.specification, item.sizeThickness].filter(Boolean).join(" • ") || "As required";
+        return `<a class="home-search-rate-card" href="enquiry.html?product_id=${encodeURIComponent(item.productId)}&pricing_id=${encodeURIComponent(item.pricingId || "")}">${item.imageUrl ? `<div class="home-search-rate-image"><img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.productName)}" loading="lazy"></div>` : '<div class="home-search-rate-image"></div>'}<div class="home-search-rate-content"><small>${escapeHtml(item.segmentName || "Product")}</small><h4>${escapeHtml(item.productName)}</h4>${item.categoryName ? `<span>${escapeHtml(item.categoryName)}</span>` : ""}<div class="home-search-rate-row"><span>${escapeHtml(item.grade || "As required")}</span><span>${escapeHtml(combinedSpec)}</span><b>${escapeHtml(item.rateText || "Price on Request")}</b></div><div class="home-search-rate-cta">Create Enquiry →</div></div></a>`;
+    }).join("");
 }
 
 function bindHomeSearch() {
@@ -769,7 +772,7 @@ function formatPublicDate(dateText) {
     return Number.isNaN(date.getTime()) ? dateText : new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric" }).format(date);
 }
 
-const enquiryCatalogueView = { query: "", segmentId: "", productId: "", grade: "", page: 1, pageSize: 9, controlsBound: false };
+const enquiryCatalogueView = { query: "", segmentId: "", productId: "", grade: "", page: 1, pageSize: 12, controlsBound: false };
 
 function publicEnquiryProducts(targetProductId = "") {
     return [...state.public.products]
@@ -974,7 +977,7 @@ function bindEnquiryCatalogueControls() {
         });
     });
     document.getElementById("enquiryProductsPerPage")?.addEventListener("change", (event) => {
-        enquiryCatalogueView.pageSize = Number(event.target.value) || 9;
+        enquiryCatalogueView.pageSize = Number(event.target.value) || 12;
         enquiryCatalogueView.page = 1;
         renderEnquiryPage();
     });

@@ -1,0 +1,6 @@
+BCSPL Website V2.1.1 — Mobile Correction Build
+Date: 14 July 2026
+
+1. Increased the Products-per-page selector width and right padding on mobile so two-digit values display completely and do not collide with the dropdown arrow.
+2. On phone-sized screens (700px and below), product segments remain two cards per row and an unmatched final segment is hidden. Example: 9 active segments display as 8 on mobile.
+3. Tablet/open-fold and desktop segment behaviour is unchanged; all active segments remain available in their horizontal carousel.

@@ -2382,3 +2382,10 @@ body.menu-open{overflow:hidden}
     transform-origin:right center!important;
   }
 }
+
+
+/* V2.1.3 Tablet contact fix */
+@media (min-width:901px) and (max-width:1180px){
+  .contact-section{min-height:0!important;height:auto!important;display:block!important;align-items:initial!important;padding-top:44px!important;padding-bottom:44px!important;}
+  .contact-section .container{width:min(1180px,92vw)!important;margin-left:auto!important;margin-right:auto!important;}
+}

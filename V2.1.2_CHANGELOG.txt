@@ -1,0 +1,7 @@
+BCSPL Website V2.1.2
+
+Changes:
+- Product Enquiry default products per page changed from 10 to 12.
+- Products-per-page dropdown options changed to 12, 18, 24, 30 and 60.
+- JavaScript pagination default and fallback updated to 12.
+- All V2.1.1 responsive and mobile fixes retained.
