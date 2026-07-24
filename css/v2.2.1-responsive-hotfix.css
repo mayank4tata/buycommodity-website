@@ -1,0 +1,134 @@
+/* =========================================================
+   BCSPL Website V2.2.1 responsive home-search hotfix
+   - Keeps the approved desktop hero image in its original scene
+     when live search results make the hero section taller.
+   - Prevents tablet/foldable pricing cards and price columns from
+     overflowing or becoming too narrow.
+   - Makes the final "open all" link span the complete results grid.
+   ========================================================= */
+
+/* Every search result must be allowed to shrink inside its grid cell. */
+.hero-search-results,
+.hero-search-results > *,
+.home-search-product-group,
+.home-search-product-group > div,
+.home-search-product-head,
+.home-search-product-head > div,
+.home-search-prices,
+.home-search-price-line,
+.home-search-price-line > * {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.hero-search-results.active {
+  align-items: start !important;
+}
+
+.home-search-product-group {
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+.home-search-product-image img {
+  display: block !important;
+}
+
+/* Fluid business columns: Grade | Specification/Size | Rate. */
+.home-search-price-line {
+  grid-template-columns:
+    minmax(0, .9fr)
+    minmax(0, 1.35fr)
+    minmax(96px, .9fr) !important;
+}
+
+.home-search-price-line span,
+.home-search-price-line b {
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+.home-search-all-results {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+}
+
+/*
+   The approved desktop image was vertically centred in a window whose
+   height increased with the search results. Locking the visual window to
+   the original 690px hero scene preserves the exact initial composition.
+   Additional search content continues below it on the black hero canvas.
+*/
+@media (min-width: 1100px) {
+  .hero-scene-window {
+    top: 0 !important;
+    bottom: auto !important;
+    height: 690px !important;
+    max-height: 690px !important;
+  }
+
+  .hero-scene-window .hero-scene-desktop {
+    object-position: right center !important;
+  }
+}
+
+/* Tablets, Surface-class devices, smaller foldables and Nest Hub use one
+   full-width result per row. This overrides the older forced two-column rule. */
+@media (max-width: 1180px) {
+  .hero-search-results.active {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .home-search-product-group {
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+  }
+
+  .home-search-price-line {
+    grid-template-columns:
+      minmax(0, .9fr)
+      minmax(0, 1.45fr)
+      minmax(108px, .8fr) !important;
+  }
+}
+
+/* Narrow tablet/fold portrait: preserve the compact card while allowing
+   all rate text to wrap cleanly. */
+@media (min-width: 651px) and (max-width: 900px) {
+  .home-search-product-group {
+    grid-template-columns: 72px minmax(0, 1fr) !important;
+    gap: 12px !important;
+    padding: 12px !important;
+  }
+
+  .home-search-product-image {
+    width: 72px !important;
+    height: 72px !important;
+  }
+
+  .home-search-price-line {
+    grid-template-columns:
+      minmax(0, .85fr)
+      minmax(0, 1.35fr)
+      minmax(102px, .8fr) !important;
+    gap: 7px !important;
+  }
+}
+
+/* Phones: stack each price's three fields; no horizontal scrolling. */
+@media (max-width: 650px) {
+  .home-search-product-group {
+    grid-template-columns: 58px minmax(0, 1fr) !important;
+  }
+
+  .home-search-price-line {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 3px !important;
+  }
+
+  .home-search-price-line b {
+    text-align: left !important;
+  }
+}
