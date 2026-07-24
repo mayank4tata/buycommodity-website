@@ -1,0 +1,82 @@
+/* BCSPL Website V2.1.4 - Admin access, invitations and password recovery */
+.login{max-width:480px}
+.login .login-help{margin:-5px 0 16px;color:#666;line-height:1.5;font-size:14px}
+.login input{width:100%;margin:7px 0;padding:13px 14px;border:1px solid #d8d2c7;border-radius:8px;font:inherit}
+.login-link-button{display:block;width:100%;border:0;background:transparent;color:#b87900;font-weight:800;cursor:pointer;padding:12px 6px 4px;text-align:center}
+.login-link-button:hover,.login-link-button:focus{text-decoration:underline}
+.forgot-password-panel{margin-top:16px;padding:18px;border:1px solid #ead8ad;border-radius:12px;background:#fffaf0}
+.forgot-password-panel h3{margin:0 0 7px;font-size:21px}
+.forgot-password-panel p{margin:0 0 10px;color:#5f5b53;font-size:13px;line-height:1.5}
+.auth-inline-message{min-height:20px;margin:10px 0 0!important;font-size:13px!important;font-weight:700;color:#286338!important}
+.auth-inline-message.is-error{color:#a32020!important}
+
+.admin-sidebar-account{margin-top:auto;padding:14px 12px;border-top:1px solid #eadfca;border-bottom:1px solid #eadfca;display:grid;gap:4px;overflow:hidden}
+.admin-sidebar-account span{font-size:11px;color:#68635a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.admin-sidebar-account strong{font-size:12px;color:#a56b00;text-transform:uppercase;letter-spacing:.5px}
+.super-admin-only[hidden]{display:none!important}
+
+.admin-section-title-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:18px}
+.admin-section-title-row h2{margin-bottom:5px}
+.admin-user-invite-card{padding:20px;border:1px solid #ead3a0;border-radius:13px;background:linear-gradient(135deg,#fffdf7,#fff7e6);margin-bottom:22px}
+.admin-user-invite-card h3{margin:0 0 14px;font-size:22px}
+.admin-user-invite-form{display:grid;grid-template-columns:1.1fr 1.4fr .75fr auto;gap:12px;align-items:end}
+.admin-user-invite-form label{font-size:12px;font-weight:800;color:#4d463b}
+.admin-user-invite-form input,.admin-user-invite-form select{display:block;width:100%;margin-top:6px;border:1px solid #d8cfbf;border-radius:8px;padding:11px 12px;background:#fff;font:inherit}
+.admin-user-invite-form .btn{min-height:43px;white-space:nowrap}
+.admin-access-note{margin:12px 0 0;color:#6a6256;font-size:12px;line-height:1.5}
+.admin-users-table-wrap{overflow-x:auto}
+.admin-users-table{min-width:1100px}
+.admin-users-table td{vertical-align:top}
+.admin-user-name strong{display:block;margin-bottom:4px}
+.admin-user-name small{color:#777}
+.admin-user-email{max-width:240px;overflow-wrap:anywhere}
+.admin-role-select{min-width:130px;border:1px solid #d6cfbf;border-radius:7px;padding:8px;background:#fff}
+.admin-status-pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.35px;background:#e8f5eb;color:#216b32}
+.admin-status-pill.inactive{background:#f8e7e7;color:#9d2525}
+.admin-status-pill.pending{background:#fff1ce;color:#956100}
+.admin-user-actions{display:flex;flex-wrap:wrap;gap:7px;min-width:320px}
+.admin-user-actions button{border:1px solid #d69a13;background:#fff;color:#a66d00;border-radius:7px;padding:7px 9px;font-weight:800;font-size:11px;cursor:pointer}
+.admin-user-actions button:hover{background:#fff7e7}
+.admin-user-actions button.danger{border-color:#cd7777;color:#a11d1d}
+.admin-user-actions button:disabled{opacity:.45;cursor:not-allowed}
+.admin-users-empty{padding:28px!important;text-align:center;color:#716b60}
+
+.reset-password-page{min-height:100vh;display:grid;place-items:center;background:#f7f3ea;padding:24px}
+.reset-password-card{width:min(520px,100%);background:#fff;border:1px solid #eadfca;border-radius:16px;padding:28px;box-shadow:0 16px 38px rgba(0,0,0,.08)}
+.reset-password-card .brand{margin-bottom:22px}
+.reset-password-card .brand img{width:52px}
+.reset-password-card h1{font-size:30px;margin:0 0 8px}
+.reset-password-card .intro{color:#666;line-height:1.55;margin:0 0 18px}
+.reset-password-form{display:grid;gap:13px}
+.reset-password-form label{font-size:13px;font-weight:800}
+.reset-password-form input{width:100%;margin-top:6px;padding:13px 14px;border:1px solid #d8d2c7;border-radius:8px;font:inherit}
+.password-guidance{font-size:12px;color:#6f685d;line-height:1.5;margin:0}
+.reset-password-state{padding:12px 14px;border-radius:9px;background:#fff6df;border:1px solid #ead095;color:#5c4308;font-size:13px;line-height:1.45;margin-bottom:14px}
+.reset-password-state.success{background:#eaf6ed;border-color:#acd1b4;color:#1f6130}
+.reset-password-state.error{background:#fbecec;border-color:#e0b0b0;color:#902323}
+
+@media(max-width:1100px){
+  .admin-user-invite-form{grid-template-columns:1fr 1fr}
+  .admin-user-invite-form .btn{width:100%}
+}
+@media(max-width:700px){
+  .admin-section-title-row{display:block}
+  .admin-section-title-row .btn{margin-top:10px;width:100%}
+  .admin-user-invite-form{grid-template-columns:1fr}
+  .reset-password-card{padding:22px}
+}
+
+/* Keep user-management columns readable on medium desktop widths. */
+.admin-users-table th:nth-child(1),.admin-users-table td:nth-child(1){min-width:180px}
+.admin-users-table th:nth-child(2),.admin-users-table td:nth-child(2){min-width:230px}
+.admin-users-table th:nth-child(3),.admin-users-table td:nth-child(3){min-width:150px}
+.admin-users-table th:nth-child(4),.admin-users-table td:nth-child(4){min-width:100px}
+.admin-users-table th:nth-child(5),.admin-users-table td:nth-child(5){min-width:145px}
+.admin-users-table th:nth-child(6),.admin-users-table td:nth-child(6){min-width:165px}
+.admin-users-table th:nth-child(7),.admin-users-table td:nth-child(7){min-width:340px}
+
+@media(max-width:900px){
+  .admin-sidebar-account{padding:10px 4px;min-height:42px;text-align:center}
+  .admin-sidebar-account span,.admin-sidebar-account strong{font-size:0}
+  .admin-sidebar-account:before{content:"●";font-size:16px;color:#b87900}
+}

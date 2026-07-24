@@ -190,7 +190,8 @@ const BCSPLDataLayer = {
     async fetchCategories({ includeInactive = false } = {}) {
         let query = supabaseClient
             .from("product_categories")
-            .select("category_id, segment_id, category_name, active")
+            .select("category_id, segment_id, category_name, display_order, active")
+            .order("display_order", { ascending: true })
             .order("category_name", { ascending: true });
 
         if (!includeInactive) query = query.eq("active", true);
@@ -217,6 +218,7 @@ const BCSPLDataLayer = {
         const payload = {
             segment_id: segmentId,
             category_name: categoryName,
+            display_order: toPositiveInteger(category?.display_order, 1),
             active: category?.active !== false
         };
 

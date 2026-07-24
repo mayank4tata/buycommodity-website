@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Admin | Buy Commodity</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/v2.1.4-admin-access.css">
+    <link rel="stylesheet" href="css/v2.2-catalogue-master.css?v=2.2.0">
 </head>
 <body>
     <div class="admin-wrap">
@@ -18,9 +20,19 @@
                 <div><b>BUY COMMODITY</b><span>Admin Panel</span></div>
             </a>
             <h2>Admin Login</h2>
-            <input id="uid" type="email" placeholder="Admin Email">
-            <input id="pwd" type="password" placeholder="Password">
+            <p class="login-help">Use your authorised BCSPL administrator account.</p>
+            <input id="uid" type="email" placeholder="Admin Email" autocomplete="username">
+            <input id="pwd" type="password" placeholder="Password" autocomplete="current-password">
             <button class="btn btn-gold wide" id="loginBtn">Login</button>
+            <button class="login-link-button" id="showForgotPasswordBtn" type="button">Forgot password?</button>
+            <form class="forgot-password-panel" id="forgotPasswordPanel" hidden>
+                <h3>Recover Password</h3>
+                <p>Enter your authorised admin email. A secure password-reset link will be sent if the account exists.</p>
+                <input id="recoveryEmail" type="email" placeholder="Admin Email" autocomplete="email">
+                <button class="btn btn-gold wide" id="sendRecoveryBtn" type="submit">Send Reset Link</button>
+                <button class="login-link-button" id="cancelRecoveryBtn" type="button">Back to login</button>
+                <p class="auth-inline-message" id="recoveryMessage" role="status" aria-live="polite"></p>
+            </form>
         </div>
 
         <div class="admin-panel" id="adminPanel" hidden>
@@ -36,28 +48,102 @@
                 </div>
                 <div class="admin-nav-group-label">Overview</div>
                 <button class="btn btn-outline active" type="button" data-section="dashboardSection"><span class="nav-glyph">⌂</span><span>Dashboard</span></button>
-                <div class="admin-nav-group-label">Master Data</div>
+                <div class="admin-nav-group-label">Catalogue Management</div>
+                <button class="btn btn-outline" type="button" data-section="catalogueMasterSection"><span class="nav-glyph">▦</span><span>Catalogue &amp; Pricing Master</span></button>
+                <button class="btn btn-outline" type="button" data-section="imageLibrarySection"><span class="nav-glyph">▧</span><span>Image Library</span></button>
+                <div class="admin-nav-group-label">Advanced Catalogue Tools</div>
                 <button class="btn btn-outline" type="button" data-section="segmentsSection"><span class="nav-glyph">◫</span><span>Product Segments</span></button>
                 <button class="btn btn-outline" type="button" data-section="categoriesSection"><span class="nav-glyph">▱</span><span>Categories</span></button>
                 <button class="btn btn-outline" type="button" data-section="productsSection"><span class="nav-glyph">□</span><span>Products</span></button>
                 <button class="btn btn-outline" type="button" data-section="gradeMasterSection"><span class="nav-glyph">≋</span><span>Grade Master</span></button>
                 <button class="btn btn-outline" type="button" data-section="pricingSection"><span class="nav-glyph">◇</span><span>Product Pricing</span></button>
-                <button class="btn btn-outline" type="button" data-section="imageLibrarySection"><span class="nav-glyph">▧</span><span>Image Library</span></button>
                 <div class="admin-nav-group-label">Operations</div>
                 <button class="btn btn-outline" type="button" data-section="enquiriesSection"><span class="nav-glyph">✉</span><span>Enquiries</span></button>
                 <button class="btn btn-outline" type="button" data-section="enquiryRecipientsSection"><span class="nav-glyph">@</span><span>Enquiry Recipients</span></button>
                 <button class="btn btn-outline" type="button" data-section="siteSettingsSection"><span class="nav-glyph">⚙</span><span>Site Settings</span></button>
                 <button class="btn btn-outline" type="button" data-section="importExportSection"><span class="nav-glyph">⇅</span><span>Import / Export</span></button>
-            <button class="admin-sidebar-logout" id="sidebarLogoutBtn" type="button"><span>↪</span> Logout</button></div>
+                <div class="admin-nav-group-label super-admin-only" data-super-admin-only>Administration</div>
+                <button class="btn btn-outline super-admin-only" type="button" data-section="usersSection" data-super-admin-only><span class="nav-glyph">♙</span><span>Users &amp; Access</span></button>
+                <div class="admin-sidebar-account">
+                    <span id="adminCurrentUserEmail">Signed in</span>
+                    <strong id="adminCurrentUserRole">Administrator</strong>
+                </div>
+                <button class="admin-sidebar-logout" id="sidebarLogoutBtn" type="button"><span>↪</span> Logout</button>
+            </div>
 
             <section class="admin-section" id="dashboardSection" data-admin-section>
                 <h2>Dashboard</h2>
                 <div class="dashboard-grid" id="dashboardCards"></div>
                 <div class="admin-actions">
-                    <button class="btn btn-gold" id="dashboardSegmentsBtn">Manage Segments</button>
+                    <button class="btn btn-gold" id="dashboardCatalogueBtn">Catalogue &amp; Pricing Master</button>
+                    <button class="btn btn-outline" id="dashboardSegmentsBtn">Manage Segments</button>
                     <button class="btn btn-outline" id="dashboardProductsBtn">Manage Products</button>
                     <button class="btn btn-outline" id="dashboardPricingBtn">Manage Pricing</button>
                     <button class="btn btn-outline" id="dashboardEnquiriesBtn">View Enquiries</button>
+                </div>
+            </section>
+
+            <section class="admin-section catalogue-master-section" id="catalogueMasterSection" data-admin-section style="display:none">
+                <div class="admin-section-title-row catalogue-master-title-row">
+                    <div>
+                        <h2>Catalogue &amp; Pricing Master</h2>
+                        <p class="sub">Manage Segment → Category → Product → Grade → Pricing from one Excel and one editable review window. System IDs remain hidden in Excel.</p>
+                    </div>
+                    <span class="version-pill">V2.2.0</span>
+                </div>
+
+                <div class="catalogue-master-actions">
+                    <button class="btn btn-gold" id="downloadCatalogueMasterBtn" type="button">Download Current Master</button>
+                    <button class="btn btn-outline" id="downloadCatalogueTemplateBtn" type="button">Download Blank Template</button>
+                    <label class="btn btn-outline catalogue-upload-button">Upload Revised Master<input type="file" id="importCatalogueMasterFile" accept=".xlsx,.xls,.csv" hidden></label>
+                    <button class="btn btn-outline" id="addCatalogueReviewRowBtn" type="button">+ Add Row</button>
+                </div>
+                <p class="catalogue-master-help"><b>Display order remains under your control.</b> Enter a positive whole number for every applicable Segment, Category, Product, Grade and Price row. New price rows default to 1-day validity.</p>
+
+                <div class="catalogue-import-filebar" id="catalogueImportFileBar" hidden>
+                    <div><small>Uploaded file</small><strong id="catalogueImportFileName">—</strong></div>
+                    <div><small>Review status</small><strong id="catalogueImportStatus">Not validated</strong></div>
+                </div>
+
+                <div class="catalogue-summary-grid" id="catalogueImportSummary">
+                    <article><span>New Hierarchy</span><strong id="catalogueSummaryHierarchy">0</strong></article>
+                    <article><span>New Prices</span><strong id="catalogueSummaryNewPricing">0</strong></article>
+                    <article><span>Updates</span><strong id="catalogueSummaryUpdates">0</strong></article>
+                    <article><span>Unchanged</span><strong id="catalogueSummaryUnchanged">0</strong></article>
+                    <article><span>Delete Requests</span><strong id="catalogueSummaryDeletes">0</strong></article>
+                    <article class="error-card"><span>Rows Needing Attention</span><strong id="catalogueSummaryErrors">0</strong></article>
+                </div>
+
+                <div class="catalogue-review-toolbar">
+                    <label>Result<select id="catalogueReviewStatusFilter"><option value="all">All results</option><option value="error">Needs attention</option><option value="new">New</option><option value="update">Updated</option><option value="unchanged">Unchanged</option><option value="delete">Delete</option><option value="ignore">Ignored</option></select></label>
+                    <label>Segment<select id="catalogueReviewSegmentFilter"><option value="all">All segments</option></select></label>
+                    <label>Product<input id="catalogueReviewProductFilter" type="search" placeholder="Filter product"></label>
+                    <label>Search<input id="catalogueReviewTextFilter" type="search" placeholder="Grade, size, specification..."></label>
+                    <button class="btn btn-outline" id="clearCatalogueReviewFiltersBtn" type="button">Clear Filters</button>
+                </div>
+
+                <div class="catalogue-review-message" id="catalogueReviewMessage" role="status" aria-live="polite">Download the current master or upload a revised workbook to begin.</div>
+
+                <div class="admin-table-wrap catalogue-review-wrap">
+                    <table class="admin-table catalogue-review-table">
+                        <thead><tr>
+                            <th><input type="checkbox" id="selectAllCatalogueRows" aria-label="Select all visible rows"></th>
+                            <th>#</th><th>Result</th><th>Segment</th><th>Segment Order</th><th>Segment Active</th><th>Category</th><th>Category Order</th><th>Category Active</th><th>Product</th><th>Product Description</th><th>Product Active</th><th>Prices Page</th><th>Product Order</th><th>Home Tile</th><th>Home Position</th><th>Grade</th><th>Grade Order</th><th>Grade Active</th><th>Specification</th><th>Size / Thickness</th><th>Unit</th><th>Rate</th><th>Price Display</th><th>Validity Days</th><th>Rate Updated On</th><th>Remarks</th><th>Price Order</th><th>Price Active</th><th>Action</th><th>Issue / Correction</th><th>Row Actions</th>
+                        </tr></thead>
+                        <tbody id="catalogueReviewRows"><tr><td colspan="32" class="catalogue-empty-state">No workbook uploaded.</td></tr></tbody>
+                    </table>
+                </div>
+
+                <div class="catalogue-review-footer">
+                    <div class="catalogue-selection-actions">
+                        <button class="btn btn-outline" id="deleteSelectedCatalogueRowsBtn" type="button">Remove Selected from Upload</button>
+                        <button class="btn btn-outline" id="downloadCatalogueErrorsBtn" type="button">Download Error Report</button>
+                    </div>
+                    <div class="catalogue-save-actions">
+                        <button class="btn btn-outline" id="cancelCatalogueUploadBtn" type="button">Cancel Complete Upload</button>
+                        <button class="btn btn-outline" id="revalidateCatalogueBtn" type="button">Revalidate</button>
+                        <button class="btn btn-gold" id="saveCatalogueMasterBtn" type="button">Save All Valid Changes</button>
+                    </div>
                 </div>
             </section>
 
@@ -72,7 +158,7 @@
                 <h2>Product Categories</h2>
                 <p class="sub">Product Categories are classification only and do not appear as Home tiles.</p>
                 <div class="admin-actions admin-toolbar"><button class="btn btn-gold icon-action" id="addCategoryBtn" title="Add" aria-label="Add"><span class="action-icon" aria-hidden="true">＋</span></button><button class="btn btn-outline icon-action" id="saveCategoriesBtn" title="Save" aria-label="Save"><span class="action-icon" aria-hidden="true">💾</span></button><button class="btn btn-outline danger-action icon-action" id="deleteSelectedCategoriesBtn" title="Delete selected" aria-label="Delete selected"><span class="action-icon" aria-hidden="true">🗑</span></button><span class="selection-count-badge" id="categoriesSelectedCount" hidden></span><button class="btn btn-outline icon-action" id="clearCategoriesSelectionBtn" title="Clear selection" aria-label="Clear selection"><span class="action-icon" aria-hidden="true">×</span></button></div>
-                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllCategories" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product Segment</th><th>Category Name</th><th>Active</th></tr></thead><tbody id="categoryRows"></tbody></table></div>
+                <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllCategories" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Product Segment</th><th>Category Name</th><th>Category Display Order *</th><th>Active</th></tr></thead><tbody id="categoryRows"></tbody></table></div>
             </section>
 
             <section class="admin-section" id="productsSection" data-admin-section style="display:none">
@@ -164,9 +250,39 @@
                 <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th class="select-all-header"><input type="checkbox" id="selectAllRecipients" title="Select all rows" aria-label="Select all rows"></th><th>#</th><th>Name</th><th>Email Address</th><th>Recipient Order</th><th>Receive Enquiries</th></tr></thead><tbody id="enquiryRecipientRows"></tbody></table></div>
             </section>
 
+
+            <section class="admin-section" id="usersSection" data-admin-section style="display:none">
+                <div class="admin-section-title-row">
+                    <div>
+                        <h2>Users &amp; Access</h2>
+                        <p class="sub">Invite administrators, assign roles and control access. Only Super Admin users can open this section.</p>
+                    </div>
+                    <button class="btn btn-outline" id="refreshAdminUsersBtn" type="button">Refresh Users</button>
+                </div>
+
+                <div class="admin-user-invite-card">
+                    <h3>Invite New Administrator</h3>
+                    <form class="admin-user-invite-form" id="inviteAdminUserForm">
+                        <label>Full Name<input id="newAdminFullName" type="text" maxlength="120" placeholder="Employee name" required></label>
+                        <label>Email Address<input id="newAdminEmail" type="email" maxlength="254" placeholder="name@company.com" autocomplete="off" required></label>
+                        <label>Role<select id="newAdminRole"><option value="admin">Admin</option><option value="super_admin">Super Admin</option></select></label>
+                        <button class="btn btn-gold" id="inviteAdminUserBtn" type="submit">Send Invitation</button>
+                    </form>
+                    <p class="admin-access-note">The invited user receives an email and sets their own password. Super Admin access should be assigned only where user-management authority is required.</p>
+                    <p class="auth-inline-message" id="adminUsersMessage" role="status" aria-live="polite"></p>
+                </div>
+
+                <div class="admin-table-wrap admin-users-table-wrap">
+                    <table class="admin-table admin-users-table">
+                        <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Invitation</th><th>Last Login</th><th>Actions</th></tr></thead>
+                        <tbody id="adminUserRows"><tr><td colspan="7">Loading administrator users...</td></tr></tbody>
+                    </table>
+                </div>
+            </section>
+
             <section class="admin-section" id="importExportSection" data-admin-section style="display:none">
-                <h2>Import / Export</h2>
-                <p class="sub">Blank UUID inserts. Existing UUID updates. No deletion occurs from omitted rows.</p>
+                <h2>Legacy Import / Export</h2>
+                <p class="sub"><b>Advanced fallback only.</b> Use Catalogue &amp; Pricing Master for normal bulk updates. These older tools remain available for isolated technical corrections.</p>
                 <div class="admin-actions">
                     <button class="btn btn-outline" id="downloadProductsTemplate">Products Master Template</button>
                     <button class="btn btn-outline" id="exportProductsMaster">Export Products Master</button>
@@ -186,7 +302,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/supabase.js?v=2.2.0"></script>
+    <script src="js/app.js?v=2.2.0"></script>
+    <script src="js/v2.2-catalogue-master.js?v=2.2.0"></script>
 </body>
 </html>

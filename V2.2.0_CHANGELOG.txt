@@ -1,0 +1,70 @@
+BCSPL Website V2.2.0
+Release date: 24 July 2026
+Release type: Cumulative production upgrade over V2.1.4
+
+IMPORTANT
+V2.2.0 retains the complete V2.1.4 password recovery, administrator invitation,
+Users & Access, roles, audit and security functionality. It adds the catalogue,
+pricing and Home search overhaul described below.
+
+CATALOGUE & PRICING MASTER
+- Added one primary Catalogue & Pricing Master workspace in the Admin panel.
+- Added Download Current Master, Download Blank Template and Upload Revised Master.
+- Added one workbook for Segment, Category, Product, Grade and Pricing maintenance.
+- Existing UUIDs are retained in hidden system columns; normal users work with names.
+- Missing Segments, Categories, Products and Grades can be created from the same row.
+- Manual display-order control remains mandatory at Segment, Category, Product, Grade
+  and Pricing levels; Home Tile Position is also user-controlled.
+- Price Validity Days defaults to 1 for new rows.
+- Excel serial dates and DD-MM-YYYY, DD/MM/YYYY and YYYY-MM-DD dates are supported.
+- Legacy Product Pricing exports can be loaded into the new review workflow.
+- Added human-readable, record-specific error explanations and corrections.
+- Added editable HTML upload review with filters by result, segment, product and text.
+- Added row validation/save, cancel row edits, remove from upload, bulk remove,
+  error report download, full upload cancellation and final save.
+- Omitting a row never deletes a database record. Existing pricing deletion requires
+  explicit Action = Delete and final confirmation.
+- Added all-or-nothing database RPC admin_import_catalogue_master_v2(jsonb).
+- Added catalogue import audit records.
+- Added Category Display Order to the database and Advanced Category editor.
+- Kept legacy individual catalogue/import tools under Advanced Catalogue Tools.
+
+HOME SEARCH
+- Home search now stays on the Home page and displays matching published pricing.
+- Search covers Segment, Category, Product, Grade, Specification, Size and Remarks.
+- Results are grouped by Product and show Grade, Specification/Size and Price state.
+- Home shortcut chips now run the pricing search instead of redirecting to Products.
+- View All Rates opens Prices & Enquiry with the relevant product/search filter.
+- Added script versioning to reduce stale-cache deployment problems.
+
+V2.1.4 FEATURES RETAINED
+- Forgot Password and secure password reset page.
+- Invitation-based administrator onboarding.
+- Users & Access for Super Admins.
+- Admin and Super Admin roles.
+- Resend invitation, send password reset, disable and reactivate user actions.
+- Protection against self-disable, self-demotion and removal of the last Super Admin.
+- Access audit history and server-side Auth Admin operations through Edge Function.
+
+FILES ADDED
+- css/v2.2-catalogue-master.css
+- css/v2.2-home-search.css
+- js/v2.2-catalogue-master.js
+- js/v2.2-home-search.js
+- supabase/migrations/20260724_v2_2_0_catalogue_pricing_master.sql
+- templates/BCSPL_Catalogue_Pricing_Master_Template_V2.2.0.xlsx
+- V2.2.0_DEPLOYMENT_GUIDE.md
+- V2.2.0_CHANGELOG.txt
+
+FILES UPDATED
+- admin.html
+- index.html
+- enquiry.html
+- products.html
+- js/app.js
+- js/supabase.js
+- README.md
+- README.txt
+
+FILES REMOVED
+- Obsolete duplicate root-level app.js. All pages use js/app.js?v=2.2.0.

@@ -67,6 +67,8 @@ const state = {
         images: [],
         enquiries: [],
         recipients: [],
+        users: [],
+        currentUser: null,
         editingIndexes: {
             segments: new Set(),
             categories: new Set(),
@@ -218,11 +220,12 @@ function normalizeSegment(item, index) {
     };
 }
 
-function normalizeCategory(item) {
+function normalizeCategory(item, index = 0) {
     return {
         category_id: item?.category_id || "",
         segment_id: item?.segment_id || "",
         category_name: item?.category_name || "",
+        display_order: Number(item?.display_order || index + 1),
         active: item?.active !== false
     };
 }
@@ -772,7 +775,7 @@ function formatPublicDate(dateText) {
     return Number.isNaN(date.getTime()) ? dateText : new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric" }).format(date);
 }
 
-const enquiryCatalogueView = { query: "", segmentId: "", productId: "", grade: "", page: 1, pageSize: 12, controlsBound: false };
+const enquiryCatalogueView = { query: "", segmentId: "", productId: "", grade: "", page: 1, pageSize: 12, controlsBound: false, urlSearchApplied: false };
 
 function publicEnquiryProducts(targetProductId = "") {
     return [...state.public.products]
@@ -1018,6 +1021,13 @@ function renderEnquiryPage() {
 
     const params = new URLSearchParams(location.search);
     const targetProductId = params.get("product_id") || "";
+    const targetSearch = params.get("search") || "";
+    if (targetSearch && !enquiryCatalogueView.urlSearchApplied) {
+        enquiryCatalogueView.query = targetSearch;
+        enquiryCatalogueView.urlSearchApplied = true;
+        const searchInput = document.getElementById("enquiryCatalogueSearch");
+        if (searchInput) searchInput.value = targetSearch;
+    }
     const allProducts = publicEnquiryProducts(targetProductId);
 
     if (!allProducts.length) {
@@ -1207,7 +1217,12 @@ function parseCsv(text, delimiter) {
     return rows.filter((entry) => entry.length).map((entry) => Object.fromEntries(headers.map((header, index) => [String(header).trim(), entry[index] ?? ""])));
 }
 
+function isCurrentUserSuperAdmin() {
+    return state.admin.currentUser?.role === "super_admin" && state.admin.currentUser?.active !== false;
+}
+
 function renderAdminSection(sectionId) {
+    if (sectionId === "usersSection" && !isCurrentUserSuperAdmin()) sectionId = "dashboardSection";
     state.admin.activeSection = sectionId;
     document.querySelectorAll("[data-admin-section]").forEach((section) => {
         section.style.display = section.id === sectionId ? "block" : "none";
@@ -1573,7 +1588,7 @@ function renderSegmentRows() {
 function renderCategoryRows() {
     const tbody = document.getElementById("categoryRows");
     if (!tbody) return;
-    tbody.innerHTML = state.admin.categories.map((category, index) => `<tr data-index="${index}" data-id="${category.category_id}" class="${state.admin.editingIndexes.categories.has(index) ? "row-editing" : ""}"><td><input type="checkbox" data-row-select ${state.admin.editingIndexes.categories.has(index) ? "checked" : ""}></td><td>${index + 1}</td><td><select data-field="segment_id">${adminSegmentOptions(category.segment_id)}</select></td><td><input data-field="category_name" value="${escapeHtml(category.category_name)}" placeholder="Category Name"></td><td><input type="checkbox" data-field="active" ${category.active !== false ? "checked" : ""}></td></tr>`).join("");
+    tbody.innerHTML = state.admin.categories.map((category, index) => `<tr data-index="${index}" data-id="${category.category_id}" class="${state.admin.editingIndexes.categories.has(index) ? "row-editing" : ""}"><td><input type="checkbox" data-row-select ${state.admin.editingIndexes.categories.has(index) ? "checked" : ""}></td><td>${index + 1}</td><td><select data-field="segment_id">${adminSegmentOptions(category.segment_id)}</select></td><td><input data-field="category_name" value="${escapeHtml(category.category_name)}" placeholder="Category Name"></td><td><input type="number" min="1" data-field="display_order" value="${escapeHtml(category.display_order || index + 1)}"></td><td><input type="checkbox" data-field="active" ${category.active !== false ? "checked" : ""}></td></tr>`).join("");
     tbody.querySelectorAll("tr").forEach((row) => {
         setRowReadOnly(row, !state.admin.editingIndexes.categories.has(Number(row.dataset.index)));
     });
@@ -1994,6 +2009,7 @@ function syncCategoriesFromInputs() {
         category_id: row.dataset.id || "",
         segment_id: row.querySelector('[data-field="segment_id"]')?.value || "",
         category_name: row.querySelector('[data-field="category_name"]')?.value?.trim() || "",
+        display_order: row.querySelector('[data-field="display_order"]')?.value || "",
         active: row.querySelector('[data-field="active"]')?.checked !== false };
     });
 }
@@ -2410,7 +2426,7 @@ function addSegmentRow() {
 
 function addCategoryRow() {
     resetAdminTableView("categories");
-    prependEditableAdminRow({ moduleKey: "categories", item: normalizeCategory({ segment_id: "", category_name: "", active: true }), sync: syncCategoriesFromInputs, render: renderCategoryRows, focusSelector: '#categoryRows tr:first-child [data-field="segment_id"]' });
+    prependEditableAdminRow({ moduleKey: "categories", item: normalizeCategory({ segment_id: "", category_name: "", display_order: 1, active: true }, 0), sync: syncCategoriesFromInputs, render: renderCategoryRows, focusSelector: '#categoryRows tr:first-child [data-field="segment_id"]' });
 }
 
 function addProductRow() {
@@ -2456,7 +2472,163 @@ function fillAdminSettings(settings) {
     });
 }
 
+
+function formatAdminAccessDate(value) {
+    if (!value) return "—";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "—";
+    return new Intl.DateTimeFormat("en-IN", {
+        dateStyle: "medium",
+        timeStyle: "short"
+    }).format(date);
+}
+
+function setAdminUsersMessage(message = "", isError = false) {
+    const element = document.getElementById("adminUsersMessage");
+    if (!element) return;
+    element.textContent = message;
+    element.classList.toggle("is-error", isError);
+}
+
+async function adminFunctionErrorMessage(error, fallback) {
+    try {
+        if (error?.context && typeof error.context.json === "function") {
+            const payload = await error.context.json();
+            return payload?.error || fallback;
+        }
+    } catch {}
+    return error?.message || fallback;
+}
+
+async function invokeAdminUsersFunction(action, payload = {}) {
+    const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+    if (sessionError || !session?.access_token) throw new Error("Your administrator session has expired. Please sign in again.");
+
+    const { data, error } = await supabaseClient.functions.invoke("manage-admin-users", {
+        body: { action, ...payload },
+        headers: { Authorization: `Bearer ${session.access_token}` }
+    });
+    if (error) throw new Error(await adminFunctionErrorMessage(error, "The user-management request failed."));
+    if (!data?.success) throw new Error(data?.error || "The user-management request failed.");
+    return data;
+}
+
+async function loadAdminUsers({ showMessage = false } = {}) {
+    if (!isCurrentUserSuperAdmin()) {
+        state.admin.users = [];
+        renderAdminUsers();
+        return;
+    }
+    const tbody = document.getElementById("adminUserRows");
+    if (tbody) tbody.innerHTML = '<tr><td colspan="7" class="admin-users-empty">Loading administrator users...</td></tr>';
+    if (showMessage) setAdminUsersMessage("Refreshing users...");
+    try {
+        const result = await invokeAdminUsersFunction("list");
+        state.admin.users = Array.isArray(result.users) ? result.users : [];
+        renderAdminUsers();
+        if (showMessage) setAdminUsersMessage("User list refreshed.");
+    } catch (error) {
+        state.admin.users = [];
+        renderAdminUsers(error?.message || "Could not load administrator users.");
+        setAdminUsersMessage(error?.message || "Could not load administrator users.", true);
+    }
+}
+
+function renderAdminUsers(errorMessage = "") {
+    const tbody = document.getElementById("adminUserRows");
+    if (!tbody) return;
+    if (!isCurrentUserSuperAdmin()) {
+        tbody.innerHTML = '<tr><td colspan="7" class="admin-users-empty">Super Admin access is required.</td></tr>';
+        return;
+    }
+    if (errorMessage) {
+        tbody.innerHTML = `<tr><td colspan="7" class="admin-users-empty">${escapeHtml(errorMessage)}</td></tr>`;
+        return;
+    }
+    if (!state.admin.users.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="admin-users-empty">No administrator users found.</td></tr>';
+        return;
+    }
+
+    const currentUserId = state.admin.currentUser?.user_id || "";
+    tbody.innerHTML = state.admin.users.map((user) => {
+        const isSelf = user.user_id === currentUserId;
+        const pending = !user.email_confirmed_at && !user.last_sign_in_at;
+        const statusClass = user.active === false ? "inactive" : pending ? "pending" : "";
+        const statusText = user.active === false ? "Inactive" : pending ? "Invited" : "Active";
+        const roleLabel = user.role === "super_admin" ? "Super Admin" : "Admin";
+        const inviteText = pending ? formatAdminAccessDate(user.invited_at || user.created_at) : "Accepted";
+        return `<tr data-admin-user-id="${escapeHtml(user.user_id)}">
+            <td class="admin-user-name"><strong>${escapeHtml(user.full_name || "—")}</strong>${isSelf ? "<small>Current user</small>" : ""}</td>
+            <td class="admin-user-email">${escapeHtml(user.email || "—")}</td>
+            <td><select class="admin-role-select" data-admin-user-role ${isSelf ? "disabled" : ""}><option value="admin" ${user.role === "admin" ? "selected" : ""}>Admin</option><option value="super_admin" ${user.role === "super_admin" ? "selected" : ""}>Super Admin</option></select><small style="display:block;margin-top:5px;color:#777">${escapeHtml(roleLabel)}</small></td>
+            <td><span class="admin-status-pill ${statusClass}">${escapeHtml(statusText)}</span></td>
+            <td>${escapeHtml(inviteText)}</td>
+            <td>${escapeHtml(formatAdminAccessDate(user.last_sign_in_at))}</td>
+            <td><div class="admin-user-actions">
+                <button type="button" data-admin-user-action="save-role" ${isSelf ? "disabled" : ""}>Save Role</button>
+                ${pending ? '<button type="button" data-admin-user-action="resend-invite">Resend Access Link</button>' : ""}
+                <button type="button" data-admin-user-action="send-reset">Send Reset</button>
+                <button type="button" class="${user.active === false ? "" : "danger"}" data-admin-user-action="toggle-active" ${isSelf ? "disabled" : ""}>${user.active === false ? "Reactivate" : "Disable"}</button>
+            </div></td>
+        </tr>`;
+    }).join("");
+
+    tbody.querySelectorAll("button[data-admin-user-action]").forEach((button) => {
+        button.addEventListener("click", async () => {
+            const row = button.closest("tr[data-admin-user-id]");
+            const userId = row?.dataset.adminUserId || "";
+            const user = state.admin.users.find((item) => item.user_id === userId);
+            if (!user) return;
+            const action = button.dataset.adminUserAction;
+            button.disabled = true;
+            try {
+                if (action === "save-role") {
+                    const role = row.querySelector("[data-admin-user-role]")?.value || "admin";
+                    if (role === user.role) {
+                        setAdminUsersMessage("No role change is required.");
+                        return;
+                    }
+                    if (!confirm(`Change ${user.email} to ${role === "super_admin" ? "Super Admin" : "Admin"}?`)) return;
+                    await invokeAdminUsersFunction("set_role", { user_id: userId, role });
+                    setAdminUsersMessage("Administrator role updated.");
+                } else if (action === "resend-invite") {
+                    await invokeAdminUsersFunction("resend_invite", { user_id: userId });
+                    setAdminUsersMessage("Access email resent.");
+                } else if (action === "send-reset") {
+                    if (!confirm(`Send a password-reset email to ${user.email}?`)) return;
+                    await invokeAdminUsersFunction("send_reset", { user_id: userId });
+                    setAdminUsersMessage("Password-reset email sent.");
+                } else if (action === "toggle-active") {
+                    const active = user.active === false;
+                    if (!confirm(`${active ? "Reactivate" : "Disable"} administrator access for ${user.email}?`)) return;
+                    await invokeAdminUsersFunction("set_active", { user_id: userId, active });
+                    setAdminUsersMessage(active ? "Administrator reactivated." : "Administrator disabled.");
+                }
+                await loadAdminUsers();
+            } catch (error) {
+                setAdminUsersMessage(error?.message || "The requested user action failed.", true);
+            } finally {
+                button.disabled = false;
+            }
+        });
+    });
+}
+
+function applyAdminRoleVisibility() {
+    const superAdmin = isCurrentUserSuperAdmin();
+    document.querySelectorAll("[data-super-admin-only]").forEach((element) => {
+        element.hidden = !superAdmin;
+    });
+    const email = document.getElementById("adminCurrentUserEmail");
+    const role = document.getElementById("adminCurrentUserRole");
+    if (email) email.textContent = state.admin.currentUser?.email || "Signed in";
+    if (role) role.textContent = superAdmin ? "Super Admin" : "Admin";
+    if (!superAdmin && state.admin.activeSection === "usersSection") state.admin.activeSection = "dashboardSection";
+}
+
 function renderAllAdminViews() {
+    applyAdminRoleVisibility();
     renderSegmentRows();
     renderCategoryRows();
     renderProductRows();
@@ -2465,6 +2637,7 @@ function renderAllAdminViews() {
     IMAGE_TYPE_CONFIG.forEach((config) => renderImageLibraryRows(config.key));
     renderEnquiryRows();
     renderEnquiryRecipientRows();
+    renderAdminUsers();
     renderDashboard();
     renderAdminSection(state.admin.activeSection);
 }
@@ -2474,6 +2647,7 @@ async function drawAdmin() {
     fillAdminSettings(settings);
     await refreshAdminData();
     renderAllAdminViews();
+    if (isCurrentUserSuperAdmin()) await loadAdminUsers();
 }
 
 function buildProductsExportRows() {
@@ -2807,15 +2981,45 @@ async function admin() {
     const emailInput = document.getElementById("uid");
     const passwordInput = document.getElementById("pwd");
     const loginButton = document.getElementById("loginBtn");
+    const forgotPanel = document.getElementById("forgotPasswordPanel");
+    const recoveryEmail = document.getElementById("recoveryEmail");
+    const recoveryMessage = document.getElementById("recoveryMessage");
+    const sendRecoveryButton = document.getElementById("sendRecoveryBtn");
 
-    async function isActiveAdmin(session) {
-        if (!session?.user?.id) return false;
+    async function getAdminProfile(session) {
+        if (!session?.user?.id) return null;
         try {
-            const { data, error } = await supabaseClient.from("admin_users").select("*").eq("user_id", session.user.id).single();
-            if (error) return false;
-            return !!data && data.active !== false;
+            const { data, error } = await supabaseClient
+                .from("admin_users")
+                .select("user_id,email,full_name,role,active,created_at,invited_at")
+                .eq("user_id", session.user.id)
+                .maybeSingle();
+            if (error || !data || data.active === false) return null;
+            return {
+                ...data,
+                email: data.email || session.user.email || "",
+                role: data.role === "super_admin" ? "super_admin" : "admin"
+            };
         } catch {
-            return false;
+            return null;
+        }
+    }
+
+    function setRecoveryMessage(message = "", isError = false) {
+        if (!recoveryMessage) return;
+        recoveryMessage.textContent = message;
+        recoveryMessage.classList.toggle("is-error", isError);
+    }
+
+    function toggleRecovery(open) {
+        if (!forgotPanel) return;
+        forgotPanel.hidden = !open;
+        setRecoveryMessage("");
+        if (open) {
+            if (recoveryEmail && !recoveryEmail.value) recoveryEmail.value = emailInput?.value?.trim() || "";
+            recoveryEmail?.focus();
+        } else {
+            emailInput?.focus();
         }
     }
 
@@ -2823,12 +3027,22 @@ async function admin() {
         panel.hidden = true;
         authCheck?.setAttribute("hidden", "");
         login.hidden = false;
+        state.admin.currentUser = null;
+        state.admin.users = [];
+        toggleRecovery(false);
     }
 
-    async function showDashboard() {
+    async function showDashboard(session, profile) {
+        state.admin.currentUser = profile || await getAdminProfile(session);
+        if (!state.admin.currentUser) {
+            await supabaseClient.auth.signOut({ scope: "local" });
+            showLogin();
+            return;
+        }
         login.hidden = true;
         authCheck?.setAttribute("hidden", "");
         panel.hidden = false;
+        applyAdminRoleVisibility();
         await drawAdmin();
     }
 
@@ -2840,7 +3054,7 @@ async function admin() {
             authCheck.hidden = false;
         }
         try {
-            const { error } = await supabaseClient.auth.signOut();
+            const { error } = await supabaseClient.auth.signOut({ scope: "local" });
             if (error) throw error;
         } catch (error) {
             console.error("Admin sign-out failed:", error);
@@ -2850,18 +3064,54 @@ async function admin() {
     }
 
     document.getElementById("sidebarLogoutBtn")?.addEventListener("click", logout);
+    document.getElementById("showForgotPasswordBtn")?.addEventListener("click", () => toggleRecovery(true));
+    document.getElementById("cancelRecoveryBtn")?.addEventListener("click", () => toggleRecovery(false));
+
+    forgotPanel?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const email = recoveryEmail?.value?.trim().toLowerCase() || "";
+        if (!email) {
+            setRecoveryMessage("Please enter your administrator email address.", true);
+            return;
+        }
+        if (sendRecoveryButton) {
+            sendRecoveryButton.disabled = true;
+            sendRecoveryButton.textContent = "Sending...";
+        }
+        setRecoveryMessage("");
+        try {
+            const redirectUrl = new URL("admin-reset-password.html", window.location.href);
+            redirectUrl.searchParams.set("mode", "recovery");
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: redirectUrl.href });
+            if (error) throw error;
+            setRecoveryMessage("If an authorised account exists for this email, a password-reset link has been sent.");
+        } catch (error) {
+            console.error("Password recovery request failed:", error);
+            setRecoveryMessage("The reset request could not be completed right now. Please wait and try again.", true);
+        } finally {
+            if (sendRecoveryButton) {
+                sendRecoveryButton.disabled = false;
+                sendRecoveryButton.textContent = "Send Reset Link";
+            }
+        }
+    });
 
     supabaseClient.auth.onAuthStateChange((event, session) => {
         if (event === "SIGNED_OUT" || !session) {
             showLogin();
             return;
         }
-        if (event === "TOKEN_REFRESHED" || event === "USER_UPDATED") {
+        if (["SIGNED_IN", "TOKEN_REFRESHED", "USER_UPDATED"].includes(event)) {
             setTimeout(async () => {
-                if (await isActiveAdmin(session)) {
-                    if (panel.hidden) await showDashboard();
+                const profile = await getAdminProfile(session);
+                if (profile) {
+                    if (panel.hidden || state.admin.currentUser?.user_id !== profile.user_id) await showDashboard(session, profile);
+                    else {
+                        state.admin.currentUser = profile;
+                        applyAdminRoleVisibility();
+                    }
                 } else {
-                    await supabaseClient.auth.signOut();
+                    await supabaseClient.auth.signOut({ scope: "local" });
                     showLogin();
                 }
             }, 0);
@@ -2871,9 +3121,10 @@ async function admin() {
     try {
         const { data: { session }, error } = await supabaseClient.auth.getSession();
         if (error) throw error;
-        if (session && await isActiveAdmin(session)) await showDashboard();
+        const profile = session ? await getAdminProfile(session) : null;
+        if (session && profile) await showDashboard(session, profile);
         else {
-            if (session) await supabaseClient.auth.signOut();
+            if (session) await supabaseClient.auth.signOut({ scope: "local" });
             showLogin();
         }
     } catch {
@@ -2892,13 +3143,18 @@ async function admin() {
         loginButton.textContent = "Signing In...";
         try {
             const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-            if (error || !(await isActiveAdmin(data.session))) {
-                await supabaseClient.auth.signOut();
-                alert("This account is not authorized to access the admin panel.");
+            if (error || !data.session) {
+                alert("The email or password is incorrect.");
+                return;
+            }
+            const profile = await getAdminProfile(data.session);
+            if (!profile) {
+                await supabaseClient.auth.signOut({ scope: "local" });
+                alert("This account is not authorised to access the admin panel.");
                 return;
             }
             if (passwordInput) passwordInput.value = "";
-            await showDashboard();
+            await showDashboard(data.session, profile);
         } catch {
             alert("An error occurred during login. Please try again.");
         } finally {
@@ -3035,6 +3291,43 @@ function bindAdmin() {
     on("dashboardProductsBtn", () => renderAdminSection("productsSection"));
     on("dashboardPricingBtn", () => renderAdminSection("pricingSection"));
     on("dashboardEnquiriesBtn", () => renderAdminSection("enquiriesSection"));
+    on("refreshAdminUsersBtn", () => loadAdminUsers({ showMessage: true }));
+
+    document.getElementById("inviteAdminUserForm")?.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!isCurrentUserSuperAdmin()) {
+            setAdminUsersMessage("Super Admin access is required.", true);
+            return;
+        }
+        const fullName = document.getElementById("newAdminFullName")?.value?.trim() || "";
+        const email = document.getElementById("newAdminEmail")?.value?.trim().toLowerCase() || "";
+        const role = document.getElementById("newAdminRole")?.value || "admin";
+        const button = document.getElementById("inviteAdminUserBtn");
+        if (!fullName || !email) {
+            setAdminUsersMessage("Full name and email address are required.", true);
+            return;
+        }
+        if (button) {
+            button.disabled = true;
+            button.textContent = "Sending...";
+        }
+        setAdminUsersMessage("");
+        try {
+            const redirectUrl = new URL("admin-reset-password.html", window.location.href);
+            redirectUrl.searchParams.set("mode", "invite");
+            await invokeAdminUsersFunction("invite", { full_name: fullName, email, role, redirect_to: redirectUrl.href });
+            event.target.reset();
+            setAdminUsersMessage("Invitation sent successfully.");
+            await loadAdminUsers();
+        } catch (error) {
+            setAdminUsersMessage(error?.message || "Could not invite the administrator.", true);
+        } finally {
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Send Invitation";
+            }
+        }
+    });
 
     document.getElementById("selectAllSegments")?.addEventListener("change", (event) => {
         setModuleSelection("segments", event.target.checked, renderSegmentRows, visibleRowIndexes("segmentRows"));

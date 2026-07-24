@@ -1,0 +1,34 @@
+BCSPL Website V2.1.4
+Release date: 24 July 2026
+
+ADMIN AUTHENTICATION
+- Added Forgot Password flow to admin.html.
+- Added secure admin-reset-password.html page for password recovery and invitation acceptance.
+- Added password confirmation and strength validation.
+- Password recovery uses a generic response so the login screen does not disclose whether an email exists.
+
+ADMIN USER MANAGEMENT
+- Added Users & Access section for Super Admin users.
+- Added invitation-based administrator creation; invited users set their own password.
+- Added Admin and Super Admin roles.
+- Added user list showing status, invitation date and last login.
+- Added role change, access-link resend, password-reset email, disable and reactivate actions.
+- Prevented self-disable/self-demotion and prevented removal of the final active Super Admin.
+
+BACKEND AND SECURITY
+- Added manage-admin-users Supabase Edge Function. Service-role operations remain server-side.
+- Added V2.1.4 database migration for role/active fields, is_admin(), is_super_admin(), RLS and audit history.
+- Added admin_access_audit events for invitations, role changes, reset emails and account status changes.
+- Corrected security documentation to use user_id and active consistently.
+- Corrected the Supabase diagnostic page script path.
+
+FILES ADDED
+- admin-reset-password.html
+- css/v2.1.4-admin-access.css
+- js/admin-reset-password.js
+- supabase/functions/manage-admin-users/index.ts
+- supabase/migrations/20260724_v2_1_4_admin_access.sql
+- V2.1.4_DEPLOYMENT_GUIDE.md
+
+IMPORTANT
+V2.1.4 requires the SQL migration, Edge Function deployment and Supabase Auth redirect URL setup before the Users & Access module can work in production.
