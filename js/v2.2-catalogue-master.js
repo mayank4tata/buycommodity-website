@@ -1,4 +1,4 @@
-/* BCSPL Website V2.2.0 - Unified Catalogue & Pricing Master
+/* BCSPL Website V2.2.2 - Unified Catalogue & Pricing Master
  * Loaded after js/app.js. V2.1.4 authentication and user management remain unchanged.
  */
 
@@ -493,7 +493,6 @@ function catalogueValidateRow(row, maps) {
             if (!validity) catalogueError(row, "price_validity_days", `Price Validity Days is invalid for ${catalogueRowIdentity(row)}.`, "Enter a positive whole number. The default is 1 day.", row.price_validity_days);
             else row.price_validity_days = validity;
             if (!row.date_valid) catalogueError(row, "rate_updated_on", `Rate Updated On is not a complete date for ${catalogueRowIdentity(row)}.`, "Enter DD-MM-YYYY, DD/MM/YYYY or YYYY-MM-DD. Example: 24-07-2026. You may also clear it and the upload date will be used.", row.raw_rate_updated_on);
-            if (!row.rate_updated_on) row.rate_updated_on = catalogueToday();
             row.rate = row.rate === "" ? "" : catalogueNumber(row.rate);
             if (row.rate_display === "show_price") {
                 if (row.rate == null || row.rate === "") catalogueError(row, "rate", `A live price is selected but Rate is blank for ${catalogueRowIdentity(row)}.`, "Enter the numeric rate, or change Price Display to Price on Request.", row.rate);
@@ -528,14 +527,51 @@ function catalogueValidateRow(row, maps) {
         return row;
     }
 
-    let changed = false;
-    if (segment) changed ||= !catalogueCompare(row.segment_name, segment.segment_name) || !catalogueCompare(row.segment_display_order, segment.display_order) || row.segment_active !== (segment.active !== false);
-    if (category) changed ||= !catalogueCompare(row.category_name, category.category_name) || !catalogueCompare(row.category_display_order, category.display_order || 1) || row.category_active !== (category.active !== false);
-    if (product) changed ||= !catalogueCompare(row.product_name, product.product_name) || !catalogueCompare(row.product_description, product.description) || row.product_active !== (product.active !== false) || row.show_on_prices_enquiry !== (product.show_on_prices_enquiry === true) || !catalogueCompare(row.product_display_order, product.prices_enquiry_display_order) || row.show_on_home !== (product.show_on_home === true) || !catalogueCompare(row.home_display_order, product.home_display_order);
-    if (grade) changed ||= !catalogueCompare(row.grade_name, grade.grade_name) || !catalogueCompare(row.grade_display_order, grade.display_order) || row.grade_active !== (grade.active !== false);
-    if (pricing) changed ||= !catalogueCompare(row.specification, pricing.specification) || !catalogueCompare(row.size_thickness, pricing.size_thickness) || !catalogueCompare(row.unit, pricing.unit) || !catalogueCompare(row.rate, pricing.rate) || row.rate_display !== pricing.rate_display || !catalogueCompare(row.price_validity_days, pricing.price_validity_days || 1) || !catalogueCompare(row.rate_updated_on, dateOnly(pricing.rate_updated_on)) || !catalogueCompare(row.remarks, pricing.remarks) || !catalogueCompare(row.pricing_display_order, pricing.display_order) || row.pricing_active !== (pricing.active !== false);
-    row.status = changed ? "update" : "unchanged";
-    row.issue = changed ? "Existing record will be updated." : "No database change detected.";
+    const changedFields = [];
+    const noteChange = (field, uploadedValue, databaseValue, same = catalogueCompare(uploadedValue, databaseValue)) => {
+        if (!same) changedFields.push(CATALOGUE_VISIBLE_FIELDS[field] || field);
+    };
+    if (segment) {
+        noteChange("segment_name", row.segment_name, segment.segment_name);
+        noteChange("segment_display_order", row.segment_display_order, segment.display_order);
+        noteChange("segment_active", row.segment_active, segment.active !== false, row.segment_active === (segment.active !== false));
+    }
+    if (category) {
+        noteChange("category_name", row.category_name, category.category_name);
+        noteChange("category_display_order", row.category_display_order, category.display_order || 1);
+        noteChange("category_active", row.category_active, category.active !== false, row.category_active === (category.active !== false));
+    }
+    if (product) {
+        noteChange("product_name", row.product_name, product.product_name);
+        noteChange("product_description", row.product_description, product.description);
+        noteChange("product_active", row.product_active, product.active !== false, row.product_active === (product.active !== false));
+        noteChange("show_on_prices_enquiry", row.show_on_prices_enquiry, product.show_on_prices_enquiry === true, row.show_on_prices_enquiry === (product.show_on_prices_enquiry === true));
+        noteChange("product_display_order", row.product_display_order, product.prices_enquiry_display_order);
+        noteChange("show_on_home", row.show_on_home, product.show_on_home === true, row.show_on_home === (product.show_on_home === true));
+        noteChange("home_display_order", row.home_display_order, product.home_display_order);
+    }
+    if (grade) {
+        noteChange("grade_name", row.grade_name, grade.grade_name);
+        noteChange("grade_display_order", row.grade_display_order, grade.display_order);
+        noteChange("grade_active", row.grade_active, grade.active !== false, row.grade_active === (grade.active !== false));
+    }
+    if (pricing) {
+        noteChange("specification", row.specification, pricing.specification);
+        noteChange("size_thickness", row.size_thickness, pricing.size_thickness);
+        noteChange("unit", row.unit, pricing.unit);
+        noteChange("rate", row.rate, pricing.rate);
+        noteChange("rate_display", row.rate_display, pricing.rate_display, row.rate_display === pricing.rate_display);
+        noteChange("price_validity_days", row.price_validity_days, pricing.price_validity_days || 1);
+        noteChange("rate_updated_on", row.rate_updated_on, dateOnly(pricing.rate_updated_on));
+        noteChange("remarks", row.remarks, pricing.remarks);
+        noteChange("pricing_display_order", row.pricing_display_order, pricing.display_order);
+        noteChange("pricing_active", row.pricing_active, pricing.active !== false, row.pricing_active === (pricing.active !== false));
+    }
+    row.changed_fields = [...new Set(changedFields)];
+    row.status = row.changed_fields.length ? "update" : "unchanged";
+    row.issue = row.changed_fields.length
+        ? `Existing record will be updated. Changed field(s): ${row.changed_fields.join(", ")}.`
+        : "No database change detected.";
     return row;
 }
 
@@ -754,7 +790,7 @@ function buildCatalogueMasterRows() {
 
 function catalogueInstructionsRows() {
     return [
-        ["BCSPL Catalogue & Pricing Master — V2.2.0"],
+        ["BCSPL Catalogue & Pricing Master — V2.2.2"],
         ["Purpose", "Manage Segment, Category, Product, Grade and Pricing from one workbook."],
         ["Normal workflow", "Download Current Master → edit existing rows or add new rows → upload → review/edit in HTML → Revalidate → Save All Valid Changes."],
         ["Display order", "Display order is controlled by you. Use positive whole numbers. Lower numbers appear first."],
@@ -1147,7 +1183,7 @@ function bindCatalogueMaster() {
             setCatalogueMessage(errors ? `${file.name} loaded. ${errors} row(s) need attention. Correct them directly below and Revalidate.` : `${file.name} loaded and validated. Review the changes below before final save.`, errors ? "error" : "success");
         } catch (error) {
             console.error(error);
-            setCatalogueMessage(`Could not read the workbook: ${error?.message || "Unknown file error"}. Download the V2.2.0 template and retain the Catalogue_Pricing_Master sheet headers.`, "error");
+            setCatalogueMessage(`Could not read the workbook: ${error?.message || "Unknown file error"}. Download the V2.2.2 template and retain the Catalogue_Pricing_Master sheet headers.`, "error");
         }
     });
 
